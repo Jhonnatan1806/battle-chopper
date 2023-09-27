@@ -9,17 +9,14 @@ public class GameView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        connection_panel1 = new javax.swing.JPanel();
-        Ibl_ip1 = new javax.swing.JLabel();
-        tf_ip1 = new javax.swing.JTextField();
-        connection_panel = new javax.swing.JPanel();
         Ibl_port = new javax.swing.JLabel();
         tf_port = new javax.swing.JTextField();
-        btn_connect = new javax.swing.JButton();
+        Ibl_ip1 = new javax.swing.JLabel();
+        tf_ip1 = new javax.swing.JTextField();
         canvas_scrollpane = new javax.swing.JScrollPane();
         ta_canvas = new javax.swing.JTextArea();
+        btn_connect = new javax.swing.JButton();
         btn_up = new javax.swing.JButton();
         btn_down = new javax.swing.JButton();
         btn_left = new javax.swing.JButton();
@@ -29,43 +26,14 @@ public class GameView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Battle Chopper");
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
-
-        java.awt.FlowLayout flowLayout2 = new java.awt.FlowLayout();
-        flowLayout2.setAlignOnBaseline(true);
-        connection_panel1.setLayout(flowLayout2);
-
-        Ibl_ip1.setText("IP");
-        connection_panel1.add(Ibl_ip1);
-
-        tf_ip1.setText("10.10.0.107");
-        connection_panel1.add(tf_ip1);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        getContentPane().add(connection_panel1, gridBagConstraints);
-
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
-        flowLayout1.setAlignOnBaseline(true);
-        connection_panel.setLayout(flowLayout1);
 
         Ibl_port.setText("Puerto");
-        connection_panel.add(Ibl_port);
 
         tf_port.setText("5492");
-        connection_panel.add(tf_port);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        getContentPane().add(connection_panel, gridBagConstraints);
+        Ibl_ip1.setText("IP");
 
-        btn_connect.setText("Conectar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        getContentPane().add(btn_connect, gridBagConstraints);
+        tf_ip1.setText("10.10.0.107");
 
         canvas_scrollpane.setPreferredSize(new java.awt.Dimension(420, 240));
 
@@ -73,43 +41,74 @@ public class GameView extends javax.swing.JFrame {
         ta_canvas.setRows(5);
         canvas_scrollpane.setViewportView(ta_canvas);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 4;
-        getContentPane().add(canvas_scrollpane, gridBagConstraints);
+        btn_connect.setText("Conectar");
 
         btn_up.setText("🡹");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        getContentPane().add(btn_up, gridBagConstraints);
 
         btn_down.setText("🡻");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
-        getContentPane().add(btn_down, gridBagConstraints);
 
         btn_left.setText("🡺");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        getContentPane().add(btn_left, gridBagConstraints);
 
         btn_right.setText("🡸");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        getContentPane().add(btn_right, gridBagConstraints);
 
         btn_fire.setText("Fire");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
-        getContentPane().add(btn_fire, gridBagConstraints);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Ibl_ip1)
+                                .addGap(25, 25, 25)
+                                .addComponent(tf_ip1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Ibl_port)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_connect))
+                            .addComponent(canvas_scrollpane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btn_right)
+                                .addGap(46, 46, 46)
+                                .addComponent(btn_left)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_fire))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_down)
+                            .addComponent(btn_up))))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Ibl_ip1)
+                    .addComponent(tf_ip1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Ibl_port)
+                    .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_connect))
+                .addGap(18, 18, 18)
+                .addComponent(canvas_scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_up)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_left)
+                    .addComponent(btn_right)
+                    .addComponent(btn_fire))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_down)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -124,8 +123,6 @@ public class GameView extends javax.swing.JFrame {
     private javax.swing.JButton btn_right;
     private javax.swing.JButton btn_up;
     private javax.swing.JScrollPane canvas_scrollpane;
-    private javax.swing.JPanel connection_panel;
-    private javax.swing.JPanel connection_panel1;
     private javax.swing.JTextArea ta_canvas;
     private javax.swing.JTextField tf_ip1;
     private javax.swing.JTextField tf_port;
