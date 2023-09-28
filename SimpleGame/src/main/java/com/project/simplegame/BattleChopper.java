@@ -9,7 +9,7 @@ import com.project.simplegame.view.GameView;
  */
 public class BattleChopper {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -23,6 +23,6 @@ public class BattleChopper {
 
         java.awt.EventQueue.invokeLater(() -> {
             new GameView().setVisible(true);
-        });
+        }); 
     }
 }
