@@ -5,7 +5,19 @@ public class GameView extends javax.swing.JFrame {
         public GameView() {
         initComponents();
     }
+        
+        public void imprimirMapa(char[][] mapa) {
+        StringBuilder mapaStr = new StringBuilder();
 
+        for (int i = 0; i < mapa.length; i++) {
+            for (int j = 0; j < mapa[i].length; j++) {
+                mapaStr.append(mapa[i][j]);
+            }
+            mapaStr.append("\n"); // Agregar un salto de línea al final de cada fila
+        }
+
+        ta_canvas.setText(mapaStr.toString()); // Establecer el contenido del mapa en el TextArea
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
