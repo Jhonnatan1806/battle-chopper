@@ -24,6 +24,17 @@ public class Stage {
             System.out.println();
         }
     }
+    
+    public char[][] getMapa(){
+        return mapa;
+    }
+    public int getFilas(){
+        return nfilas;
+    }
+    public int getColumnas(){
+        return ncolumnas;
+    }
+    
     public void leerMapa(String rutaMapa) throws IOException {
         File archivo = new File(rutaMapa);
 
