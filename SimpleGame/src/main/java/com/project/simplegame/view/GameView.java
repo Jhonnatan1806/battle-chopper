@@ -1,12 +1,14 @@
 package com.project.simplegame.view;
 
+import com.project.simplegame.model.Player;
+
 public class GameView extends javax.swing.JFrame {
 
-        public GameView() {
+    public GameView() {
         initComponents();
     }
-        
-        public void imprimirMapa(char[][] mapa) {
+
+    public void imprimirMapa(char[][] mapa) {
         StringBuilder mapaStr = new StringBuilder();
 
         for (int i = 0; i < mapa.length; i++) {
@@ -17,7 +19,22 @@ public class GameView extends javax.swing.JFrame {
         }
 
         ta_canvas.setText(mapaStr.toString()); // Establecer el contenido del mapa en el TextArea
-}
+    }
+
+    public void actualizarMapa(char[][] mapa, Player player) {
+        int x = player.getX();
+        int y = player.getY();
+        String nombre = player.getName();
+        String avatar = player.getAvatar();
+
+        for (int i = y; i < y + 7; i++) {
+            mapa[x][i] = avatar.charAt(i - y);
+        }
+        for (int i = y; i < y + 7; i++) {
+            mapa[x + 1][i] = avatar.charAt(i - y + 8);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -50,6 +67,7 @@ public class GameView extends javax.swing.JFrame {
         canvas_scrollpane.setPreferredSize(new java.awt.Dimension(420, 240));
 
         ta_canvas.setColumns(20);
+        ta_canvas.setFont(new java.awt.Font("Courier 10 Pitch", 0, 15)); // NOI18N
         ta_canvas.setRows(5);
         canvas_scrollpane.setViewportView(ta_canvas);
 
@@ -70,33 +88,40 @@ public class GameView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(92, 92, 92)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Ibl_ip1)
-                                .addGap(25, 25, 25)
-                                .addComponent(tf_ip1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Ibl_port)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_connect))
-                            .addComponent(canvas_scrollpane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btn_right)
-                                .addGap(46, 46, 46)
-                                .addComponent(btn_left)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_fire))))
+                        .addComponent(btn_down)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_down)
-                            .addComponent(btn_up))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(btn_up)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(Ibl_ip1)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_ip1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(158, 158, 158)
+                        .addComponent(Ibl_port)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(btn_left)
+                        .addGap(43, 43, 43)
+                        .addComponent(btn_right)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_connect, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_fire)
+                        .addGap(70, 70, 70))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(canvas_scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,17 +134,20 @@ public class GameView extends javax.swing.JFrame {
                     .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_connect))
                 .addGap(18, 18, 18)
-                .addComponent(canvas_scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_up)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_left)
-                    .addComponent(btn_right)
-                    .addComponent(btn_fire))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_down)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(canvas_scrollpane, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_left)
+                            .addComponent(btn_right)
+                            .addComponent(btn_fire))
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_up)
+                        .addGap(40, 40, 40)
+                        .addComponent(btn_down)
+                        .addGap(23, 23, 23))))
         );
 
         pack();

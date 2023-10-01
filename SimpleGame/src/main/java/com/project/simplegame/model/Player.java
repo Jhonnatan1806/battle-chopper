@@ -16,9 +16,9 @@ public class Player {
 
   public String getAvatar() {
     if (this.direction == Direction.LEFT) {
-      return "<-[" + this.name + "]->\n ---q";
+      return "<-[" + this.name + "]->\n  ---q ";
     } else {
-      return "<-[" + this.name + "]->\n p---";
+      return "<-[" + this.name + "]->\n p---  ";
     }
   }
 
