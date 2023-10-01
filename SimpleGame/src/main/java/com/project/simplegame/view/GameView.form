@@ -10,6 +10,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -28,15 +31,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="btn_down" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="btn_up" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="btn_down" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_up" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
@@ -51,9 +49,9 @@
                       <Component id="tf_port" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                       <Component id="btn_left" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       <Component id="btn_right" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -90,8 +88,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btn_left" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_right" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_left" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_fire" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
@@ -142,6 +140,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="ta_canvas">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Courier 10 Pitch" size="15" style="0"/>
@@ -160,21 +159,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="\ud83e\udc79" containsInvalidXMLChars="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_upActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_down">
       <Properties>
         <Property name="text" type="java.lang.String" value="\ud83e\udc7b" containsInvalidXMLChars="true"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_left">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="\ud83e\udc7a" containsInvalidXMLChars="true"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_downActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_right">
       <Properties>
+        <Property name="text" type="java.lang.String" value="\ud83e\udc7a" containsInvalidXMLChars="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_rightActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_left">
+      <Properties>
         <Property name="text" type="java.lang.String" value="\ud83e\udc78" containsInvalidXMLChars="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_leftActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_fire">
       <Properties>

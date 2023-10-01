@@ -1,10 +1,6 @@
 package com.project.simplegame;
 
-import com.project.simplegame.model.Direction;
-import com.project.simplegame.model.Player;
-import com.project.simplegame.model.Stage;
 import com.project.simplegame.view.GameView;
-import java.io.IOException;
 
 /**
  * @author Barrientos Cárdenas, Gabriel
@@ -28,27 +24,6 @@ public class BattleChopper {
         java.awt.EventQueue.invokeLater(() -> {
             GameView gameView = new GameView();
             gameView.setVisible(true);
-            // Obtener el mapa como char[][]
-            try {
-                Stage stage = new Stage("mapa.txt");
-                char[][] map = stage.getMapa();
-                // Mostrar el mapa en el TextArea
-                gameView.imprimirMapa(map);
-
-                // Crear jugador
-                Player player1 = new Player(8, 20, Direction.RIGHT, "A");
-
-                // Actualizar Mapa
-                gameView.actualizarMapa(map, player1);
-                
-                // Mostrar el mapa en el TextArea
-                gameView.imprimirMapa(map);
-
-            } catch (IOException e) {
-                // Manejar errores de lectura del mapa aquí
-                e.printStackTrace();
-            }
-
         });
     }
 }

@@ -1,14 +1,22 @@
 package com.project.simplegame.view;
 
+import com.project.simplegame.controller.GameController;
+import com.project.simplegame.model.Direction;
 import com.project.simplegame.model.Player;
+import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
 
 public class GameView extends javax.swing.JFrame {
+    
+    GameController gameController;
 
     public GameView() {
         initComponents();
+        gameController = new GameController(this);
+        
     }
 
-    public void imprimirMapa(char[][] mapa) {
+    /*public void imprimirMapa(char[][] mapa) {
         StringBuilder mapaStr = new StringBuilder();
 
         for (int i = 0; i < mapa.length; i++) {
@@ -33,6 +41,10 @@ public class GameView extends javax.swing.JFrame {
         for (int i = y; i < y + 7; i++) {
             mapa[x + 1][i] = avatar.charAt(i - y + 8);
         }
+    }*/
+    
+    public JTextArea getCanvas(){
+        return this.ta_canvas;
     }
 
     @SuppressWarnings("unchecked")
@@ -48,13 +60,18 @@ public class GameView extends javax.swing.JFrame {
         btn_connect = new javax.swing.JButton();
         btn_up = new javax.swing.JButton();
         btn_down = new javax.swing.JButton();
-        btn_left = new javax.swing.JButton();
         btn_right = new javax.swing.JButton();
+        btn_left = new javax.swing.JButton();
         btn_fire = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Battle Chopper");
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         Ibl_port.setText("Puerto");
 
@@ -66,6 +83,7 @@ public class GameView extends javax.swing.JFrame {
 
         canvas_scrollpane.setPreferredSize(new java.awt.Dimension(420, 240));
 
+        ta_canvas.setEditable(false);
         ta_canvas.setColumns(20);
         ta_canvas.setFont(new java.awt.Font("Courier 10 Pitch", 0, 15)); // NOI18N
         ta_canvas.setRows(5);
@@ -74,12 +92,32 @@ public class GameView extends javax.swing.JFrame {
         btn_connect.setText("Conectar");
 
         btn_up.setText("🡹");
+        btn_up.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_upActionPerformed(evt);
+            }
+        });
 
         btn_down.setText("🡻");
+        btn_down.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_downActionPerformed(evt);
+            }
+        });
 
-        btn_left.setText("🡺");
+        btn_right.setText("🡺");
+        btn_right.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_rightActionPerformed(evt);
+            }
+        });
 
-        btn_right.setText("🡸");
+        btn_left.setText("🡸");
+        btn_left.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_leftActionPerformed(evt);
+            }
+        });
 
         btn_fire.setText("Fire");
 
@@ -90,12 +128,9 @@ public class GameView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(92, 92, 92)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_down)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_up)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(btn_down)
+                    .addComponent(btn_up))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -108,9 +143,9 @@ public class GameView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
+                        .addGap(52, 52, 52)
                         .addComponent(btn_left)
-                        .addGap(43, 43, 43)
+                        .addGap(48, 48, 48)
                         .addComponent(btn_right)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,8 +174,8 @@ public class GameView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_left)
                             .addComponent(btn_right)
+                            .addComponent(btn_left)
                             .addComponent(btn_fire))
                         .addGap(57, 57, 57))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -152,6 +187,40 @@ public class GameView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+    }//GEN-LAST:event_formKeyPressed
+
+    private void btn_upActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_upActionPerformed
+        Player player  =  this.gameController.getPlayer(0);
+        // player.setY(player.getY()-1); // real
+        player.setX(player.getX()- 1); //funciona
+        this.gameController.update();
+    }//GEN-LAST:event_btn_upActionPerformed
+
+    private void btn_rightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rightActionPerformed
+        Player player  =  this.gameController.getPlayer(0);
+        //player.setX(player.getX() + 1); //real
+        player.setY(player.getY() + 1); //funciona
+        player.setDirection(Direction.RIGHT);
+        this.gameController.update();
+    }//GEN-LAST:event_btn_rightActionPerformed
+
+    private void btn_leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_leftActionPerformed
+        Player player  =  this.gameController.getPlayer(0);
+        //player.setX(player.getX()- 1); //real
+        player.setY(player.getY()-1); //funciona
+        player.setDirection(Direction.LEFT);
+        this.gameController.update();
+    }//GEN-LAST:event_btn_leftActionPerformed
+
+    private void btn_downActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_downActionPerformed
+        Player player  =  this.gameController.getPlayer(0);
+        // player.setY(player.getY() + 1); // real 
+        player.setX(player.getX() + 1); //funciona
+        this.gameController.update();
+    }//GEN-LAST:event_btn_downActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Ibl_ip1;

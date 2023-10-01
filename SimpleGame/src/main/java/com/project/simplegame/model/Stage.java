@@ -25,6 +25,7 @@ public class Stage {
         }
     }
     
+    
     public char[][] getMapa(){
         return mapa;
     }
@@ -79,6 +80,10 @@ public class Stage {
     
     public static void main(String[] args) throws IOException{
         new Stage("mapa.txt").ImprimirMapa();
+    }
+
+    public void setMapa(char[][] map) {
+        this.mapa = map;
     }
     
 }
