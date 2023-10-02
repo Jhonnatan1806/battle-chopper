@@ -14,14 +14,14 @@ public class GameView extends javax.swing.JFrame {
     public GameView() {
         initComponents();
         gameController = new GameController(this);
-        gameClient = new GameClient("192.168.1.2", 444,this); 
-        Thread clientThread = new Thread(gameClient);
-        clientThread.start();
+        
         
     }
     
     public void actualizarMapa(String serverMessage){
-        this.ta_canvas.setText(serverMessage);
+        //ta_canvas.setText("dentro de actualizar mapa");
+        ta_canvas.setText(serverMessage);
+        System.out.println(ta_canvas.getText());
     }
 
     /*public void imprimirMapa(char[][] mapa) {
@@ -98,6 +98,11 @@ public class GameView extends javax.swing.JFrame {
         canvas_scrollpane.setViewportView(ta_canvas);
 
         btn_connect.setText("Conectar");
+        btn_connect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_connectActionPerformed(evt);
+            }
+        });
 
         btn_up.setText("🡹");
         btn_up.addActionListener(new java.awt.event.ActionListener() {
@@ -201,38 +206,48 @@ public class GameView extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void btn_upActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_upActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
+        //Player player  =  this.gameController.getPlayer(0);
         // player.setY(player.getY()-1); // real
-        player.setX(player.getX()- 1); //funciona
-        this.gameController.update();
+        //player.setX(player.getX()- 1); //funciona
+        //this.gameController.update();
         gameClient.sendDirection("UP");
     }//GEN-LAST:event_btn_upActionPerformed
 
     private void btn_rightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rightActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
-        //player.setX(player.getX() + 1); //real
-        player.setY(player.getY() + 1); //funciona
-        player.setDirection(Direction.RIGHT);
-        this.gameController.update();
+//        Player player  =  this.gameController.getPlayer(0);
+//        //player.setX(player.getX() + 1); //real
+//        player.setY(player.getY() + 1); //funciona
+//        player.setDirection(Direction.RIGHT);
+//        this.gameController.update();
         gameClient.sendDirection("RIGHT");
     }//GEN-LAST:event_btn_rightActionPerformed
 
     private void btn_leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_leftActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
-        //player.setX(player.getX()- 1); //real
-        player.setY(player.getY()-1); //funciona
-        player.setDirection(Direction.LEFT);
-        this.gameController.update();
+//        Player player  =  this.gameController.getPlayer(0);
+//        //player.setX(player.getX()- 1); //real
+//        player.setY(player.getY()-1); //funciona
+//        player.setDirection(Direction.LEFT);
+//        this.gameController.update();
         gameClient.sendDirection("LEFT");
     }//GEN-LAST:event_btn_leftActionPerformed
 
     private void btn_downActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_downActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
-        // player.setY(player.getY() + 1); // real 
-        player.setX(player.getX() + 1); //funciona
-        this.gameController.update();
+//        Player player  =  this.gameController.getPlayer(0);
+//        // player.setY(player.getY() + 1); // real 
+//        player.setX(player.getX() + 1); //funciona
+//        this.gameController.update();
         gameClient.sendDirection("DOWN");
     }//GEN-LAST:event_btn_downActionPerformed
+
+    private void btn_connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_connectActionPerformed
+        String ip = tf_ip1.getText();
+        int port = Integer.parseInt(tf_port.getText());
+        gameClient = new GameClient(ip, port,this); 
+        gameClient.Conectar();
+        Thread clientThread = new Thread(gameClient);
+        clientThread.start();
+        
+    }//GEN-LAST:event_btn_connectActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Ibl_ip1;

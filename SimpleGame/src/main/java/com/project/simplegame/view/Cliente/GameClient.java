@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +20,8 @@ public class GameClient implements Runnable{
     
     private Socket socketCliente;
     private PrintWriter out;
-    private BufferedReader in;
+    //private BufferedReader in;
+    private Scanner in;
     
     private boolean Desconectar = false;
     
@@ -35,8 +37,9 @@ public class GameClient implements Runnable{
         try{
             socketCliente = new Socket(ServerIP,ServerPort);
             
-            out = new PrintWriter(socketCliente.getOutputStream());
-            in = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+            out = new PrintWriter(socketCliente.getOutputStream(), true);
+            //in = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+            in = new Scanner(socketCliente.getInputStream());
                     
         }catch(IOException e){
             System.out.println(e.getMessage());
@@ -53,23 +56,34 @@ public class GameClient implements Runnable{
 
     @Override
     public void run() {
-        try {
-            String serverMessage;
-            
-            if(in!=null){
-                while(!Desconectar){
-                if((serverMessage=in.readLine()) != null){
-                    gameView.actualizarMapa(serverMessage);
-                    }
-                }
-                socketCliente.close();
+        //try {
+//            String serverMessage;
+//            
+//            if(in!=null){
+//                while(!Desconectar){
+//                if((serverMessage=in.readLine()) != null){
+//                    gameView.actualizarMapa(serverMessage);
+//                    }
+//                }
+//                socketCliente.close();
+//                
+//            }
+            while(in == null) {
                 
             }
+            System.out.println("Salio de while");
+
+            while (in.hasNextLine()) {
+                    String serverMessage = in.nextLine();
+                    gameView.actualizarMapa(serverMessage);
+                    //System.out.println(serverMessage);
+                }
             
             
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }   
+        //} 
+//        catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }   
     }
     
 }
