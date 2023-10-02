@@ -15,33 +15,6 @@ public class GameView extends javax.swing.JFrame {
         gameController = new GameController(this);
         
     }
-
-    /*public void imprimirMapa(char[][] mapa) {
-        StringBuilder mapaStr = new StringBuilder();
-
-        for (int i = 0; i < mapa.length; i++) {
-            for (int j = 0; j < mapa[i].length; j++) {
-                mapaStr.append(mapa[i][j]);
-            }
-            mapaStr.append("\n"); // Agregar un salto de línea al final de cada fila
-        }
-
-        ta_canvas.setText(mapaStr.toString()); // Establecer el contenido del mapa en el TextArea
-    }
-
-    public void actualizarMapa(char[][] mapa, Player player) {
-        int x = player.getX();
-        int y = player.getY();
-        String nombre = player.getName();
-        String avatar = player.getAvatar();
-
-        for (int i = y; i < y + 7; i++) {
-            mapa[x][i] = avatar.charAt(i - y);
-        }
-        for (int i = y; i < y + 7; i++) {
-            mapa[x + 1][i] = avatar.charAt(i - y + 8);
-        }
-    }*/
     
     public JTextArea getCanvas(){
         return this.ta_canvas;
@@ -87,6 +60,11 @@ public class GameView extends javax.swing.JFrame {
         ta_canvas.setColumns(20);
         ta_canvas.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         ta_canvas.setRows(5);
+        ta_canvas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ta_canvasKeyPressed(evt);
+            }
+        });
         canvas_scrollpane.setViewportView(ta_canvas);
 
         btn_connect.setText("Conectar");
@@ -169,8 +147,8 @@ public class GameView extends javax.swing.JFrame {
                     .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_connect))
                 .addGap(18, 18, 18)
-                .addComponent(canvas_scrollpane, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
-                .addGap(64, 64, 64)
+                .addComponent(canvas_scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -194,33 +172,53 @@ public class GameView extends javax.swing.JFrame {
 
     private void btn_upActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_upActionPerformed
         Player player  =  this.gameController.getPlayer(0);
-        // player.setY(player.getY()-1); // real
-        player.setX(player.getX()- 1); //funciona
-        this.gameController.update();
+        this.gameController.updatePositionPlayer(-1, 0, player);
     }//GEN-LAST:event_btn_upActionPerformed
 
     private void btn_rightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rightActionPerformed
         Player player  =  this.gameController.getPlayer(0);
-        //player.setX(player.getX() + 1); //real
-        player.setY(player.getY() + 1); //funciona
         player.setDirection(Direction.RIGHT);
-        this.gameController.update();
+        this.gameController.updatePositionPlayer(0, 1, player);
     }//GEN-LAST:event_btn_rightActionPerformed
 
     private void btn_leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_leftActionPerformed
         Player player  =  this.gameController.getPlayer(0);
-        //player.setX(player.getX()- 1); //real
-        player.setY(player.getY()-1); //funciona
         player.setDirection(Direction.LEFT);
-        this.gameController.update();
+        this.gameController.updatePositionPlayer(0, -1, player);
     }//GEN-LAST:event_btn_leftActionPerformed
 
     private void btn_downActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_downActionPerformed
         Player player  =  this.gameController.getPlayer(0);
-        // player.setY(player.getY() + 1); // real 
-        player.setX(player.getX() + 1); //funciona
-        this.gameController.update();
+        this.gameController.updatePositionPlayer(1, 0, player);
     }//GEN-LAST:event_btn_downActionPerformed
+
+    private void ta_canvasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ta_canvasKeyPressed
+        int keyCode = evt.getKeyCode();
+        // Obtener la instancia del jugador
+        Player player = this.gameController.getPlayer(0);
+
+        // Realizar acciones basadas en la tecla presionada
+        switch (keyCode) {
+            case KeyEvent.VK_W:
+                //player.setX(player.getX() - 1);
+                this.gameController.updatePositionPlayer(-1, 0, player);
+                break;
+            case KeyEvent.VK_D:
+                //player.setY(player.getY() + 1);
+                player.setDirection(Direction.RIGHT);
+                this.gameController.updatePositionPlayer(0, 1, player);
+                break;
+            case KeyEvent.VK_A:
+                //player.setY(player.getY() - 1);
+                player.setDirection(Direction.LEFT);
+                this.gameController.updatePositionPlayer(0, -1, player);
+                break;
+            case KeyEvent.VK_S:
+                //player.setX(player.getX() + 1);
+                this.gameController.updatePositionPlayer(1, 0, player);
+                break;
+        }
+    }//GEN-LAST:event_ta_canvasKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Ibl_ip1;
