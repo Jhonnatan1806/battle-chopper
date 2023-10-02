@@ -85,7 +85,7 @@ public class GameView extends javax.swing.JFrame {
 
         ta_canvas.setEditable(false);
         ta_canvas.setColumns(20);
-        ta_canvas.setFont(new java.awt.Font("Courier 10 Pitch", 0, 15)); // NOI18N
+        ta_canvas.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         ta_canvas.setRows(5);
         canvas_scrollpane.setViewportView(ta_canvas);
 
