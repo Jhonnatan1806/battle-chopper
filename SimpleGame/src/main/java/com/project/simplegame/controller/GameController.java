@@ -67,7 +67,7 @@ public class GameController{
             map[x + 1][i] = avatar.charAt(i - y + 8);
         }
         
-        this.showMap(map);
+        //this.showMap(map);
     }
 
     public Player getPlayer(int index) {

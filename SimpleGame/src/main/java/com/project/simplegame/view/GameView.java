@@ -6,22 +6,30 @@ import com.project.simplegame.model.Player;
 import com.project.simplegame.view.Cliente.GameClient;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 public class GameView extends javax.swing.JFrame {
-    
+
     GameController gameController;
     GameClient gameClient;
+
     public GameView() {
         initComponents();
         gameController = new GameController(this);
-        
-        
+
     }
-    
-    public void actualizarMapa(String serverMessage){
-        //ta_canvas.setText("dentro de actualizar mapa");
-        ta_canvas.setText(serverMessage);
-        System.out.println(ta_canvas.getText());
+
+//    public void actualizarMapa(String serverMessage){
+//        ta_canvas.setText(serverMessage);
+//        System.out.println(ta_canvas.getText());
+//    }
+    public void actualizarMapa(String serverMessage) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ta_canvas.setText(serverMessage);
+                System.out.println(ta_canvas.getText());
+            }
+        });
     }
 
     /*public void imprimirMapa(char[][] mapa) {
@@ -50,8 +58,7 @@ public class GameView extends javax.swing.JFrame {
             mapa[x + 1][i] = avatar.charAt(i - y + 8);
         }
     }*/
-    
-    public JTextArea getCanvas(){
+    public JTextArea getCanvas() {
         return this.ta_canvas;
     }
 
@@ -91,7 +98,6 @@ public class GameView extends javax.swing.JFrame {
 
         canvas_scrollpane.setPreferredSize(new java.awt.Dimension(420, 240));
 
-        ta_canvas.setEditable(false);
         ta_canvas.setColumns(20);
         ta_canvas.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         ta_canvas.setRows(5);
@@ -242,11 +248,11 @@ public class GameView extends javax.swing.JFrame {
     private void btn_connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_connectActionPerformed
         String ip = tf_ip1.getText();
         int port = Integer.parseInt(tf_port.getText());
-        gameClient = new GameClient(ip, port,this); 
+        gameClient = new GameClient(ip, port, this);
         gameClient.Conectar();
         Thread clientThread = new Thread(gameClient);
         clientThread.start();
-        
+
     }//GEN-LAST:event_btn_connectActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

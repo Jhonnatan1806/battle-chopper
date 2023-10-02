@@ -1,4 +1,3 @@
-
 package com.project.simplegame.view.Cliente;
 
 import com.project.simplegame.view.GameView;
@@ -13,46 +12,46 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GameClient implements Runnable{
-        
-    private int ServerPort ;
-    private String ServerIP ;
-    
+public class GameClient implements Runnable {
+
+    private int ServerPort;
+    private String ServerIP;
+
     private Socket socketCliente;
     private PrintWriter out;
     //private BufferedReader in;
     private Scanner in;
-    
+
     private boolean Desconectar = false;
-    
+
     private GameView gameView;
-    
-    public GameClient(String ServerIP,int ServerPort,GameView gameView){
+
+    public GameClient(String ServerIP, int ServerPort, GameView gameView) {
         this.ServerIP = ServerIP;
         this.ServerPort = ServerPort;
         this.gameView = gameView;
-    }    
-    
-    public void Conectar(){
-        try{
-            socketCliente = new Socket(ServerIP,ServerPort);
-            
+    }
+
+    public void Conectar() {
+        try {
+            socketCliente = new Socket(ServerIP, ServerPort);
+
             out = new PrintWriter(socketCliente.getOutputStream(), true);
             //in = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
             in = new Scanner(socketCliente.getInputStream());
-                    
-        }catch(IOException e){
+
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void sendDirection(String message){
-        if(out!=null){
+
+    public void sendDirection(String message) {
+        if (out != null) {
             out.println(message);
-        }else{
+        } else {
             System.out.println("No hay mensaje.");
-        }        
-    } 
+        }
+    }
 
     @Override
     public void run() {
@@ -68,22 +67,32 @@ public class GameClient implements Runnable{
 //                socketCliente.close();
 //                
 //            }
-            while(in == null) {
-                
-            }
-            System.out.println("Salio de while");
+//        while (in == null) {
+//
+//        }
 
-            while (in.hasNextLine()) {
-                    String serverMessage = in.nextLine();
-                    gameView.actualizarMapa(serverMessage);
-                    //System.out.println(serverMessage);
+
+        while (true) {
+            StringBuilder serverMessage = new StringBuilder();
+            
+            while (true) {
+                String linea = in.nextLine();
+                if (linea.isEmpty()) {
+                    break;
                 }
-            
-            
+                //System.out.println("linea: " + linea);
+                serverMessage.append(linea + "\n");
+                //System.out.println(serverMessage);
+            }
+
+            gameView.actualizarMapa(serverMessage.toString());
+
+        }
+
         //} 
 //        catch (IOException e) {
 //            System.out.println(e.getMessage());
 //        }   
     }
-    
+
 }
