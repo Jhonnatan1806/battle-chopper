@@ -21,9 +21,12 @@ public class BattleChopper {
             java.util.logging.Logger.getLogger(GameView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> {
-            GameView gameView = new GameView();
-            gameView.setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GameView gameView = new GameView();
+                gameView.setVisible(true);
+            }
         });
     }
 }

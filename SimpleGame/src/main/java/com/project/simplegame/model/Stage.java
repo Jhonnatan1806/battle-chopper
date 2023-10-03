@@ -37,6 +37,7 @@ public class Stage {
     }
     
     public void leerMapa(String rutaMapa) throws IOException {
+        
         File archivo = new File(rutaMapa);
 
         if (!archivo.exists()) {
