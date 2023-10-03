@@ -111,7 +111,7 @@ public class PlayerHandler implements Runnable {
         for (Socket conexion : connList) {
             OutputStream outputStream = conexion.getOutputStream();
             PrintWriter out = new PrintWriter(outputStream, true);
-            out.println(mapaStr);
+            out.println(mapaStr.toString());
         }
 
     }
