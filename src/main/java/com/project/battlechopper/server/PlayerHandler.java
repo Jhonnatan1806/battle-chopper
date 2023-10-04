@@ -1,8 +1,8 @@
-package com.project.simplegame.server;
+package com.project.battlechopper.server;
 
-import com.project.simplegame.model.Direction;
-import com.project.simplegame.model.Player;
-import com.project.simplegame.model.Stage;
+import com.project.battlechopper.model.Direction;
+import com.project.battlechopper.model.Player;
+import com.project.battlechopper.model.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

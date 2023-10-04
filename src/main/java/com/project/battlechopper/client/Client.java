@@ -1,4 +1,4 @@
-package com.project.simplegame.client;
+package com.project.battlechopper.client;
 
 import javax.swing.*;
 import java.util.logging.Logger;

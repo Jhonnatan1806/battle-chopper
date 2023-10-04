@@ -1,20 +1,19 @@
-package com.project.simplegame.server;
+package com.project.battlechopper.server;
 
-import com.project.simplegame.model.Direction;
-import com.project.simplegame.model.Player;
-import com.project.simplegame.model.Stage;
+import com.project.battlechopper.model.Direction;
+import com.project.battlechopper.model.Player;
+import com.project.battlechopper.model.Stage;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameServer implements Runnable {
+public class ServerSocket implements Runnable {
     private List<Player> playersList;
     private List<Socket> connList;
     private Stage stage;
 
-    public GameServer() throws IOException {
+    public ServerSocket() throws IOException {
         stage = new Stage("resources/mapa.txt");
         playersList = new ArrayList<>();
         connList = new ArrayList<>();
@@ -24,7 +23,7 @@ public class GameServer implements Runnable {
     public void run() {
         try {
             int nro_jugador = 0;
-            ServerSocket serverSocket = new ServerSocket(8188);
+            java.net.ServerSocket serverSocket = new java.net.ServerSocket(8188);
             while (true) {
                 Socket conex_cliente = serverSocket.accept();
                 connList.add(conex_cliente);

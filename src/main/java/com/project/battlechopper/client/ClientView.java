@@ -1,6 +1,4 @@
-package com.project.simplegame.client;
-
-import com.project.simplegame.model.Direction;
+package com.project.battlechopper.client;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,4 +1,4 @@
-package com.project.simplegame.model;
+package com.project.battlechopper.model;
 
 import java.io.Serializable;
 

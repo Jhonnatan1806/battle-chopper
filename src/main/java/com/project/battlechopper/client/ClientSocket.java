@@ -1,4 +1,4 @@
-package com.project.simplegame.client;
+package com.project.battlechopper.client;
 
 import java.io.*;
 import java.net.Socket;
@@ -42,7 +42,6 @@ public class ClientSocket implements Runnable {
             System.out.println("No hay mensaje.");
         }
     }
-
 
     @Override
     public void run() {

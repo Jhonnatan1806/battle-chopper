@@ -1,12 +1,11 @@
-package com.project.simplegame.client;
+package com.project.battlechopper.client;
 
-import com.project.simplegame.model.Direction;
-import com.project.simplegame.model.Player;
-import com.project.simplegame.model.Stage;
+import com.project.battlechopper.model.Direction;
+import com.project.battlechopper.model.Player;
+import com.project.battlechopper.model.Stage;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ClientController {
 
