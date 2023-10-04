@@ -29,10 +29,6 @@ public class PlayerHandler implements Runnable {
         this.conexCliente = connList.get(nro_jugador);
     }
 
-    private void logMessageReceived(String message) {
-        System.out.println("Mensaje recibido del cliente " + nro_jugador + ": " + message);
-    }
-
     @Override
     public void run() {
         InputStream inputStream = null;
@@ -45,7 +41,6 @@ public class PlayerHandler implements Runnable {
 
             while (in.hasNextLine()) {
                 String direccion = in.nextLine();
-                logMessageReceived(direccion);
                 actualizarJugador(direccion);
                 actualizarMapa();
 
@@ -64,15 +59,6 @@ public class PlayerHandler implements Runnable {
 
     public void actualizarJugador(String direccion) {
 
-        int [] pos = parsePosition(direccion);
-
-        int currentX = player.getX() + pos[0];
-        int currentY = player.getY() + pos[1];
-
-        if(!isValidMovement(stage.getMapa(), currentX, currentY)){
-            return;
-        }
-
         switch (direccion) {
             case "RIGHT":
                 player.setY(player.getY() + 1);
@@ -88,34 +74,6 @@ public class PlayerHandler implements Runnable {
             case "DOWN":
                 player.setX(player.getX() + 1);
                 break;
-        }
-    }
-
-    public boolean isValidMovement(char[][] map, int x, int y){
-        if( x>=0 && x<24 && y>=0 && y<370){
-            if( map[x][y] != ' ' || map[x][y+1] != ' ' || map[x][y+2] != ' ' || map[x][y+6] != ' '){
-                return false;
-            }
-            if(map[x+1][y] != ' '|| map[x+1][y+1] != ' '|| map[x+1][y+2] != ' ' || map[x+1][y+6] != ' '){
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    public int[] parsePosition(String direction){
-        switch (direction){
-            case "UP":
-                return new int[]{-1, 0};
-            case "DOWN":
-                return new int[]{1, 0};
-            case "LEFT":
-                return new int[]{0, -1};
-            case "RIGHT":
-                return new int[]{0, 1};
-            default:
-                return new int[]{0, 0};
         }
     }
 

@@ -32,6 +32,7 @@ public class PruebaCliente {
                     String line = in.nextLine();
                     System.out.println(line);
                 }
+                System.out.println("hola");
             } finally{
                 s.close();
             }

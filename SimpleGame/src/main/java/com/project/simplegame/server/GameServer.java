@@ -14,8 +14,8 @@ public class GameServer implements Runnable {
     private List<Socket> connList;
     private Stage stage;
 
-    public GameServer() {
-        stage = new Stage("resources/mapa.txt");
+    public GameServer() throws IOException {
+        stage = new Stage("mapa.txt");
         playersList = new ArrayList<>();
         connList = new ArrayList<>();
     }
@@ -29,7 +29,7 @@ public class GameServer implements Runnable {
                 Socket conex_cliente = serverSocket.accept();
                 connList.add(conex_cliente);
 
-                System.out.println("Player " + (nro_jugador+1) + " conectado");
+                System.out.println("Engendrado jugador: " + nro_jugador);
                 Player jugador = new Player(8, 20, Direction.RIGHT, String.valueOf((char)(65 + nro_jugador)));
 
                 playersList.add(jugador);
