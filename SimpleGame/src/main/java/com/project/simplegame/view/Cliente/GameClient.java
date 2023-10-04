@@ -72,7 +72,7 @@ public class GameClient implements Runnable {
 //        }
 
 
-        while (true) {
+        while (!Desconectar) {
             StringBuilder serverMessage = new StringBuilder();
             
             while (true) {
