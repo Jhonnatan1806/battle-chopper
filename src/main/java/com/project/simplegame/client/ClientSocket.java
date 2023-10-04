@@ -49,22 +49,6 @@ public class ClientSocket implements Runnable {
         try {
             connect();
 
-            new Thread(() -> {
-                while (!disconnectRequested) {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (clientController.isMoveRequested()) {
-                        sendDirection(clientController.getDirection());
-                        clientController.setMoveRequested(false);
-                    }
-                }
-
-            }).start();
-
             while (!disconnectRequested) {
                 StringBuilder serverMessage = new StringBuilder();
 

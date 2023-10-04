@@ -14,11 +14,10 @@ public class ClientController {
     ClientSocket clientSocket;
     ArrayList<String> mapList;
     Player player;
-    boolean moveRequested;
+
     public ClientController(ClientView clientView) {
         this.clientView = clientView;
         this.player = new Player(8, 20, Direction.NONE, "Player");
-        this.moveRequested = false;
         this.mapList = new ArrayList<>();
         this.defaultSettings();
     }
@@ -55,26 +54,8 @@ public class ClientController {
         defaultSettings();
     }
 
-    public boolean isMoveRequested() {
-        return moveRequested;
+    public void sendDirection(String direction){
+        clientSocket.sendDirection(direction);
     }
 
-    public void setMoveRequested(boolean state) {
-        moveRequested = state;
-    }
-
-    public String getDirection() {
-        switch (player.getDirection()){
-            case UP:
-                return "UP";
-            case DOWN:
-                return "DOWN";
-            case LEFT:
-                return "LEFT";
-            case RIGHT:
-                return "RIGHT";
-            default:
-                return "NONE";
-        }
-    }
 }

@@ -21,7 +21,7 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
 
     private void initComponents() {
         setTitle("Battle Chopper");
-        setResizable(true);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
 
@@ -84,20 +84,16 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
 
         switch (keyCode) {
             case KeyEvent.VK_W:
-                clientController.player.setDirection(Direction.UP);
-                clientController.setMoveRequested(true);
+                clientController.sendDirection("UP");
                 break;
             case KeyEvent.VK_S:
-                clientController.player.setDirection(Direction.DOWN);
-                clientController.setMoveRequested(true);
+                clientController.sendDirection("DOWN");
                 break;
             case KeyEvent.VK_A:
-                clientController.player.setDirection(Direction.LEFT);
-                clientController.setMoveRequested(true);
+                clientController.sendDirection("LEFT");
                 break;
             case KeyEvent.VK_D:
-                clientController.player.setDirection(Direction.RIGHT);
-                clientController.setMoveRequested(true);
+                clientController.sendDirection("RIGHT");
                 break;
         }
 
