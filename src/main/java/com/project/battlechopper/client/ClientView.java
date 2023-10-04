@@ -1,5 +1,6 @@
 package com.project.battlechopper.client;
 
+import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +26,7 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
 
         ta_canvas = new JTextArea();
         ta_canvas.setEditable(false);
-        ta_canvas.setFont(new java.awt.Font("Consolas", 0, 10));
+        ta_canvas.setFont(new Font(Font.MONOSPACED, 0, 10));
         ta_canvas.setBounds(10, 40, 580, 325);
         ta_canvas.setFocusable(true);
         ta_canvas.addKeyListener(this);
@@ -38,7 +39,7 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
         btn_connect.setEnabled(true);
         add(btn_connect);
 
-        btn_disconnect = new JButton("Disconnect");
+        btn_disconnect = new JButton("Disconnect"); 
         btn_disconnect.setBounds(120, 10, 100, 20);
         btn_disconnect.setFocusable(false);
         btn_disconnect.addActionListener(this);
