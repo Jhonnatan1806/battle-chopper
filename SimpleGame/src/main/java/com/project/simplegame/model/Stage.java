@@ -1,9 +1,6 @@
 package com.project.simplegame.model;
 
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 
 public class Stage {
     
@@ -11,7 +8,7 @@ public class Stage {
     private int nfilas;
     private int ncolumnas;
     
-    public Stage(String rutaMapa) throws IOException{
+    public Stage(String rutaMapa){
         leerMapa(rutaMapa);
     }
     
@@ -36,13 +33,7 @@ public class Stage {
         return ncolumnas;
     }
     
-    public void leerMapa(String rutaMapa) throws IOException {
-        
-        File archivo = new File(rutaMapa);
-
-        if (!archivo.exists()) {
-            throw new IOException("El archivo mapa.txt no existe en la ruta especificada.");
-        }
+    public void leerMapa(String rutaMapa)  {
 
         try (BufferedReader lector = new BufferedReader(new FileReader(rutaMapa))) {
             // Defino las dimensiones del mapa según el txt
@@ -76,15 +67,9 @@ public class Stage {
                     f++;
                 }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
-    
-    public static void main(String[] args) throws IOException{
-        new Stage("mapa.txt").ImprimirMapa();
-    }
 
-    public void setMapa(char[][] map) {
-        this.mapa = map;
-    }
-    
 }

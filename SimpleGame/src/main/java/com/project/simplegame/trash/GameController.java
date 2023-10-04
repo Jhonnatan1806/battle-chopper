@@ -1,39 +1,28 @@
-package com.project.simplegame.controller;
+package com.project.simplegame.trash;
 
 import com.project.simplegame.model.Direction;
 import com.project.simplegame.model.Player;
 import com.project.simplegame.model.Stage;
-import com.project.simplegame.view.GameView;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class GameController{    
+import java.util.ArrayList;
+
+public class GameController {
     
     private GameView gameView;
     private Stage stage;
     private ArrayList<Player> playerList;
     
-    public GameController(GameView gameView){
+    public GameController(GameView gameView, Player player) {
         this.gameView = gameView;
-        try {
-            this.stage = new Stage("resources/mapa.txt");
-        } catch (IOException ex) {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.stage = new Stage("resources/mapa.txt");
         this.playerList = new ArrayList<>();
-        playerList.add(new Player(8, 20, Direction.RIGHT, "A"));
+        playerList.add(player);
         this.defaultSettings();
     }
     
     private void defaultSettings(){
         Player player = playerList.get(0);
-        this.updatePositionPlayer(0, 0, player);
-    }
-    
-    public Player getPlayer(int index) {
-        return playerList.get(index);
+        this.move(Direction.NONE, player);
     }
     
     public void showMap(char[][] map){
@@ -42,27 +31,29 @@ public class GameController{
             for (int j = 0; j < item.length; j++) {
                 mapaStr.append(item[j]);
             }
-            mapaStr.append("\n"); // Agregar un salto de línea al final de cada fila
+            mapaStr.append("\n");
         }
 
-        gameView.getCanvas().setText(mapaStr.toString()); // Establecer el contenido del mapa en el TextArea
+        gameView.getCanvas().setText(mapaStr.toString());
     }
-            
-    public void updatePositionPlayer(int x, int y, Player player){
-        
+
+    public void move(Direction direction, Player player){
+
         char[][] map = stage.getMapa().clone();
-        
-        int currentX = player.getX() + x;
-        int currentY = player.getY() + y;
-        
+
+        int[] pos =  parseDirectionToPosition(direction);
+
+        int currentX = player.getX() + pos[0];
+        int currentY = player.getY() + pos[1];
+
         if(!isValid(map, currentX , currentY )){
-            return; // si no es valido no realiza movimiento
+            return;
         }
-        
+
         player.setX(currentX);
         player.setY(currentY);
         String avatar = player.getAvatar();
-        
+
         // Clonar el mapa original
         for (int i = 0; i < map.length; i++) {
             map[i] = stage.getMapa()[i].clone();
@@ -74,7 +65,7 @@ public class GameController{
         for (int i = currentY; i < currentY + 7; i++) {
             map[currentX + 1][i] = avatar.charAt(i - currentY + 8);
         }
-        
+
         this.showMap(map);
     }
 
@@ -90,6 +81,21 @@ public class GameController{
             return true;
         }
         return false;
+    }
+
+    public int[] parseDirectionToPosition(Direction direction){
+        switch (direction){
+            case UP:
+                return new int[]{-1, 0};
+            case DOWN:
+                return new int[]{1, 0};
+            case LEFT:
+                return new int[]{0, -1};
+            case RIGHT:
+                return new int[]{0, 1};
+            default:
+                return new int[]{0, 0};
+        }
     }
    
 }

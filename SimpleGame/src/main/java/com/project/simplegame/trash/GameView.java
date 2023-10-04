@@ -1,6 +1,5 @@
-package com.project.simplegame.view;
+package com.project.simplegame.trash;
 
-import com.project.simplegame.controller.GameController;
 import com.project.simplegame.model.Direction;
 import com.project.simplegame.model.Player;
 import java.awt.event.KeyEvent;
@@ -8,12 +7,13 @@ import javax.swing.JTextArea;
 
 public class GameView extends javax.swing.JFrame {
     
-    GameController gameController;
+    private GameController gameController;
+    private Player player;
 
     public GameView() {
         initComponents();
-        gameController = new GameController(this);
-        
+        player = new Player(8, 20, Direction.RIGHT, "A");
+        gameController = new GameController(this, player);
     }
     
     public JTextArea getCanvas(){
@@ -40,11 +40,6 @@ public class GameView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Battle Chopper");
         setResizable(false);
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                formKeyPressed(evt);
-            }
-        });
 
         Ibl_port.setText("Puerto");
 
@@ -166,56 +161,40 @@ public class GameView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
-    }//GEN-LAST:event_formKeyPressed
-
     private void btn_upActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_upActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
-        this.gameController.updatePositionPlayer(-1, 0, player);
+        this.gameController.move(Direction.UP, player);
     }//GEN-LAST:event_btn_upActionPerformed
 
     private void btn_rightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rightActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
         player.setDirection(Direction.RIGHT);
-        this.gameController.updatePositionPlayer(0, 1, player);
+        this.gameController.move(Direction.RIGHT, player);
     }//GEN-LAST:event_btn_rightActionPerformed
 
     private void btn_leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_leftActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
         player.setDirection(Direction.LEFT);
-        this.gameController.updatePositionPlayer(0, -1, player);
+        this.gameController.move(Direction.LEFT, player);
     }//GEN-LAST:event_btn_leftActionPerformed
 
     private void btn_downActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_downActionPerformed
-        Player player  =  this.gameController.getPlayer(0);
-        this.gameController.updatePositionPlayer(1, 0, player);
+        this.gameController.move(Direction.DOWN, player);
     }//GEN-LAST:event_btn_downActionPerformed
 
     private void ta_canvasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ta_canvasKeyPressed
         int keyCode = evt.getKeyCode();
-        // Obtener la instancia del jugador
-        Player player = this.gameController.getPlayer(0);
-
-        // Realizar acciones basadas en la tecla presionada
         switch (keyCode) {
             case KeyEvent.VK_W:
-                //player.setX(player.getX() - 1);
-                this.gameController.updatePositionPlayer(-1, 0, player);
+                this.gameController.move(Direction.UP, player);
                 break;
             case KeyEvent.VK_D:
-                //player.setY(player.getY() + 1);
                 player.setDirection(Direction.RIGHT);
-                this.gameController.updatePositionPlayer(0, 1, player);
+                this.gameController.move(Direction.RIGHT, player);
                 break;
             case KeyEvent.VK_A:
-                //player.setY(player.getY() - 1);
                 player.setDirection(Direction.LEFT);
-                this.gameController.updatePositionPlayer(0, -1, player);
+                this.gameController.move(Direction.LEFT, player);
                 break;
             case KeyEvent.VK_S:
-                //player.setX(player.getX() + 1);
-                this.gameController.updatePositionPlayer(1, 0, player);
+                this.gameController.move(Direction.DOWN, player);
                 break;
         }
     }//GEN-LAST:event_ta_canvasKeyPressed

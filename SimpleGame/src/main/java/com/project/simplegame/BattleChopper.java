@@ -1,6 +1,6 @@
 package com.project.simplegame;
 
-import com.project.simplegame.view.GameView;
+import com.project.simplegame.trash.GameView;
 
 /**
  * @author Barrientos Cárdenas, Gabriel

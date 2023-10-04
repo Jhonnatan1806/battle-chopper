@@ -1,6 +1,8 @@
 package com.project.simplegame.model;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
   private int x;
   private int y;
