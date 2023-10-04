@@ -22,7 +22,7 @@ public class ClientController {
     }
 
     private void defaultSettings(){
-        Stage stage = new Stage("resources/mapa.txt");
+        Stage stage = new Stage("resources/titulo.txt");
         char[][] map = stage.getMapa();
         StringBuilder mapaStr = new StringBuilder();
         for (char[] item : map) {

@@ -19,6 +19,8 @@ public class PlayerHandler implements Runnable {
     private List<Player> playersList;
     private Player player;
     private Socket conexCliente;
+    private boolean connected;
+
 
     public PlayerHandler(List<Socket> connList, int nro_jugador, Stage stage, List<Player> jugadores) {
         this.connList = connList;
@@ -27,6 +29,7 @@ public class PlayerHandler implements Runnable {
         this.playersList = jugadores;
         this.player = playersList.get(nro_jugador);
         this.conexCliente = connList.get(nro_jugador);
+        this.connected = true;
     }
 
     @Override
@@ -51,7 +54,8 @@ public class PlayerHandler implements Runnable {
             ex.printStackTrace();
         } finally {
             try {
-                inputStream.close();
+                conexCliente.close();
+                connected = false;
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -111,17 +115,26 @@ public class PlayerHandler implements Runnable {
         }
 
         StringBuilder mapaStr = new StringBuilder();
-        for (char[] item : map) {
-            for (int j = 0; j < item.length; j++) {
-                mapaStr.append(item[j]);
+        try {
+            for (char[] item : map) {
+                for (int j = 0; j < item.length; j++) {
+                    mapaStr.append(item[j]);
+                }
+                mapaStr.append("\n");
             }
-            mapaStr.append("\n");
-        }
 
-        for (Socket conexion : connList) {
-            OutputStream outputStream = conexion.getOutputStream();
-            PrintWriter out = new PrintWriter(outputStream, true);
-            out.println(mapaStr.toString());
+            for (Socket conexion : connList) {
+                if (!conexion.isClosed()) {
+                    OutputStream outputStream = conexion.getOutputStream();
+                    PrintWriter out = new PrintWriter(outputStream, true);
+                    out.println(mapaStr.toString());
+                } else {
+
+                    System.err.println("El socket está cerrado para una conexión.");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

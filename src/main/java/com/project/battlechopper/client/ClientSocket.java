@@ -25,12 +25,18 @@ public class ClientSocket implements Runnable {
         serverOut = new PrintWriter(socketClient.getOutputStream(), true);
     }
 
-    public void disconnect() {
+    public synchronized void disconnect() {
         disconnectRequested = true;
         try {
-            socketClient.close();
+            if (socketClient != null && !socketClient.isClosed()) {
+                socketClient.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            socketClient = null;
+            serverIn = null;
+            serverOut = null;
         }
     }
 
@@ -51,21 +57,27 @@ public class ClientSocket implements Runnable {
             while (!disconnectRequested) {
                 StringBuilder serverMessage = new StringBuilder();
 
-                while (true) {
-                    String linea = serverIn.nextLine();
-                    if (linea.isEmpty()) {
-                        break;
+                if (serverIn.hasNextLine()) {
+                    while (true) {
+                        String linea = serverIn.nextLine();
+                        if (linea.isEmpty()) {
+                            break;
+                        }
+                        serverMessage.append(linea).append("\n");
                     }
-                    serverMessage.append(linea + "\n");
+
+                    clientController.render(serverMessage.toString());
+                } else {
+                    Thread.sleep(100);
                 }
-
-                clientController.render(serverMessage.toString());
             }
-
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             disconnect();
         }
     }
+
 }
