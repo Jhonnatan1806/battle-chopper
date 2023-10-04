@@ -5,32 +5,41 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ClientSocket implements Runnable {
-    private String serverAddress;
+    private String serverIP;
     private int serverPort;
-    private Socket socket;
-    private Scanner serverScanner;
-    private PrintWriter serverWriter;
+    private Socket socketClient;
+    private Scanner serverIn;
+    private PrintWriter serverOut;
     private ClientController clientController;
     private boolean disconnectRequested = false;
 
-    public ClientSocket(String serverAddress, int serverPort, ClientController clientController) {
+    public ClientSocket(String serverIP, int serverPort, ClientController clientController) {
         this.clientController = clientController;
-        this.serverAddress = serverAddress;
+        this.serverIP = serverIP;
         this.serverPort = serverPort;
     }
 
     public void connect() throws IOException {
-        socket = new Socket(serverAddress, serverPort);
-        serverScanner = new Scanner(socket.getInputStream());
-        serverWriter = new PrintWriter(socket.getOutputStream(), true);
+        socketClient = new Socket(serverIP, serverPort);
+        serverIn = new Scanner(socketClient.getInputStream());
+        serverOut = new PrintWriter(socketClient.getOutputStream(), true);
     }
 
     public void disconnect() {
         disconnectRequested = true;
         try {
-            socket.close();
+            socketClient.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendDirection(String message) {
+        if (serverOut != null) {
+            System.out.println("Sending direction: " + message);
+            serverOut.println(message);
+        } else {
+            System.out.println("No hay mensaje.");
         }
     }
 
@@ -47,9 +56,9 @@ public class ClientSocket implements Runnable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     if (clientController.isMoveRequested()) {
-                        System.out.println("Sending direction: " + clientController.getDirection());
-                        serverWriter.println(clientController.getDirection());
+                        sendDirection(clientController.getDirection());
                         clientController.setMoveRequested(false);
                     }
                 }
@@ -57,10 +66,17 @@ public class ClientSocket implements Runnable {
             }).start();
 
             while (!disconnectRequested) {
-                if (serverScanner.hasNextLine()) {
-                    String serverMessage = serverScanner.nextLine();
-                    clientController.sendMap(serverMessage);
+                StringBuilder serverMessage = new StringBuilder();
+
+                while (true) {
+                    String linea = serverIn.nextLine();
+                    if (linea.isEmpty()) {
+                        break;
+                    }
+                    serverMessage.append(linea + "\n");
                 }
+
+                clientController.render(serverMessage.toString());
             }
 
         } catch (IOException e) {

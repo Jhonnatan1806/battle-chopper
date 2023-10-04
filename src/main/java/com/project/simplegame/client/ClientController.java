@@ -4,6 +4,7 @@ import com.project.simplegame.model.Direction;
 import com.project.simplegame.model.Player;
 import com.project.simplegame.model.Stage;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +17,15 @@ public class ClientController {
     boolean moveRequested;
     public ClientController(ClientView clientView) {
         this.clientView = clientView;
-        this.mapList = new ArrayList<>();
-        this.player = new Player(8, 20, Direction.NONE, "0");
+        this.player = new Player(8, 20, Direction.NONE, "Player");
         this.moveRequested = false;
+        this.mapList = new ArrayList<>();
         this.defaultSettings();
     }
 
     private void defaultSettings(){
         Stage stage = new Stage("resources/mapa.txt");
         char[][] map = stage.getMapa();
-        render(map);
-    }
-
-    private void render(char[][] map){
         StringBuilder mapaStr = new StringBuilder();
         for (char[] item : map) {
             for (int j = 0; j < item.length; j++) {
@@ -36,8 +33,16 @@ public class ClientController {
             }
             mapaStr.append("\n");
         }
-
         clientView.getCanvas().setText(mapaStr.toString());
+    }
+
+    public void render(String map){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                clientView.getCanvas().setText(map);
+            }
+        });
     }
 
     public void connect(String serverAddress, int serverPort ){
@@ -50,34 +55,12 @@ public class ClientController {
         defaultSettings();
     }
 
-    public void sendMap(String partMap){
-        mapList.add(partMap);
-        if (mapList.size() >= 26) {
-            char[][] mapArray = convertToCharArray(mapList);
-            render(mapArray);
-            mapList.removeAll(mapList);
-        }
-    }
-
-    private char[][] convertToCharArray(List<String> lines) {
-        int numRows = lines.size();
-        int numCols = lines.get(0).length();
-        char[][] mapArray = new char[numRows][numCols];
-
-        for (int i = 0; i < numRows; i++) {
-            String line = lines.get(i);
-            mapArray[i] = line.toCharArray();
-        }
-
-        return mapArray;
-    }
-
     public boolean isMoveRequested() {
         return moveRequested;
     }
 
-    public void setMoveRequested(boolean b) {
-        moveRequested = b;
+    public void setMoveRequested(boolean state) {
+        moveRequested = state;
     }
 
     public String getDirection() {
