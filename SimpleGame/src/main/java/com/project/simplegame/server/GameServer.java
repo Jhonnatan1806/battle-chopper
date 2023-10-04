@@ -15,7 +15,7 @@ public class GameServer implements Runnable {
     private Stage stage;
 
     public GameServer() throws IOException {
-        stage = new Stage("mapa.txt");
+        stage = new Stage("resources/mapa.txt");
         playersList = new ArrayList<>();
         connList = new ArrayList<>();
     }
