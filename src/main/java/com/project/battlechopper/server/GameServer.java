@@ -8,12 +8,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerSocket implements Runnable {
+public class GameServer implements Runnable {
     private List<Player> playersList;
     private List<Socket> connList;
     private Stage stage;
 
-    public ServerSocket() throws IOException {
+    public GameServer() throws IOException {
         stage = new Stage("resources/mapa.txt");
         playersList = new ArrayList<>();
         connList = new ArrayList<>();
