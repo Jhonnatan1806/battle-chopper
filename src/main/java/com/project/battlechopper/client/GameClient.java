@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientSocket implements Runnable {
+public class GameClient implements Runnable {
     private String serverIP;
     private int serverPort;
     private Socket socketClient;
@@ -13,7 +13,7 @@ public class ClientSocket implements Runnable {
     private ClientController clientController;
     private boolean disconnectRequested = false;
 
-    public ClientSocket(String serverIP, int serverPort, ClientController clientController) {
+    public GameClient(String serverIP, int serverPort, ClientController clientController) {
         this.clientController = clientController;
         this.serverIP = serverIP;
         this.serverPort = serverPort;

@@ -124,13 +124,11 @@ public class PlayerHandler implements Runnable {
             }
 
             for (Socket conexion : connList) {
+                // verificar si la conexion esta abierta
                 if (!conexion.isClosed()) {
                     OutputStream outputStream = conexion.getOutputStream();
                     PrintWriter out = new PrintWriter(outputStream, true);
                     out.println(mapaStr.toString());
-                } else {
-
-                    System.err.println("El socket está cerrado para una conexión.");
                 }
             }
         } catch (IOException e) {

@@ -10,19 +10,19 @@ import java.util.ArrayList;
 public class ClientController {
 
     ClientView clientView;
-    ClientSocket clientSocket;
+    GameClient gameClient;
     ArrayList<String> mapList;
     Player player;
 
     public ClientController(ClientView clientView) {
         this.clientView = clientView;
-        this.player = new Player(8, 20, Direction.NONE, "Player");
+        this.player = new Player(8, 20, Direction.RIGHT, "Player");
         this.mapList = new ArrayList<>();
         this.defaultSettings();
     }
 
     private void defaultSettings(){
-        Stage stage = new Stage("resources/titulo.txt");
+        Stage stage = new Stage("resources/mapa.txt");
         char[][] map = stage.getMapa();
         StringBuilder mapaStr = new StringBuilder();
         for (char[] item : map) {
@@ -44,17 +44,18 @@ public class ClientController {
     }
 
     public void connect(String serverAddress, int serverPort ){
-        clientSocket = new ClientSocket(serverAddress, serverPort , this);
-        new Thread(clientSocket).start();
+        gameClient = new GameClient(serverAddress, serverPort , this);
+        new Thread(gameClient).start();
     }
 
     public void disconnect(){
-        clientSocket.disconnect();
+        gameClient.disconnect();
         defaultSettings();
     }
 
     public void sendDirection(String direction){
-        clientSocket.sendDirection(direction);
+        player.setDirection(Direction.valueOf(direction));
+        gameClient.sendDirection(direction);
     }
 
 }

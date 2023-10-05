@@ -94,6 +94,9 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
             case KeyEvent.VK_D:
                 clientController.sendDirection("RIGHT");
                 break;
+            case KeyEvent.VK_SPACE:
+                clientController.player.shoot();
+                break;
         }
 
 
