@@ -33,23 +33,22 @@ public class Bullet {
     public void move() {
         switch (this.getDirection()) {
             case UP:
-                this.y -= this.speed;
-                break;
-            case DOWN:
-                this.y += this.speed;
-                break;
-            case LEFT:
                 this.x -= this.speed;
                 break;
-            case RIGHT:
+            case DOWN:
                 this.x += this.speed;
+                break;
+            case LEFT:
+                this.y -= 2*this.speed;
+                break;
+            case RIGHT:
+                this.y += 2*this.speed;
                 break;
         }
     }
 
     public boolean isOnScreen() {
-        return this.x >= 0 && this.x <= 100 && this.y >= 0 && this.y <= 26;
+        return this.x >= 0 && this.x < 23 && this.y >= 0 && this.y < 100;
     }
-
 
 }

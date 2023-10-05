@@ -4,7 +4,6 @@ import com.project.battlechopper.model.Direction;
 import com.project.battlechopper.model.Player;
 import com.project.battlechopper.model.Stage;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class ClientController {
@@ -13,11 +12,13 @@ public class ClientController {
     GameClient gameClient;
     ArrayList<String> mapList;
     Player player;
+    boolean isShooting;
 
     public ClientController(ClientView clientView) {
         this.clientView = clientView;
-        this.player = new Player(8, 20, Direction.RIGHT, "Player");
+        this.player = new Player(8, 20, Direction.NONE, "Player");
         this.mapList = new ArrayList<>();
+        this.isShooting = false;
         this.defaultSettings();
     }
 
@@ -35,17 +36,27 @@ public class ClientController {
     }
 
     public void render(String map){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                clientView.getCanvas().setText(map);
-            }
-        });
+        clientView.getCanvas().setText(map);
     }
 
     public void connect(String serverAddress, int serverPort ){
         gameClient = new GameClient(serverAddress, serverPort , this);
         new Thread(gameClient).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    gameClient.sendData(player.getDirection()+","+ isShooting);
+                    player.setDirection(Direction.NONE);
+                    isShooting = false;
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     public void disconnect(){
@@ -53,9 +64,8 @@ public class ClientController {
         defaultSettings();
     }
 
-    public void sendDirection(String direction){
-        player.setDirection(Direction.valueOf(direction));
-        gameClient.sendDirection(direction);
+    public void setData(Direction direction, boolean state) {
+        player.setDirection(direction);
+        isShooting = state;
     }
-
 }

@@ -60,6 +60,10 @@ public class Player implements Serializable {
     this.name = name;
   }
 
+  public List<Bullet> getBullets() {
+    return bullets;
+  }
+
   public void shoot(){
     if(this.bullets.size() >= 3){
       return;

@@ -1,5 +1,6 @@
 package com.project.battlechopper.server;
 
+import com.project.battlechopper.model.Bullet;
 import com.project.battlechopper.model.Direction;
 import com.project.battlechopper.model.Player;
 import com.project.battlechopper.model.Stage;
@@ -62,9 +63,13 @@ public class PlayerHandler implements Runnable {
         }
     }
 
-    public void actualizarJugador(String direccion) {
+    public void actualizarJugador(String data) {
 
-        int [] pos = parsePosition(direccion);
+        String[] parts = data.split(",");
+        String direction = parts[0];
+        boolean isShooting = parts[1].equals("true");
+
+        int [] pos = parsePosition(direction);
 
         int currentX = player.getX() + pos[0];
         int currentY = player.getY() + pos[1];
@@ -73,7 +78,7 @@ public class PlayerHandler implements Runnable {
             return;
         }
 
-        switch (direccion) {
+        switch (direction) {
             case "RIGHT":
                 player.setY(player.getY() + 1);
                 player.setDirection(Direction.RIGHT);
@@ -84,15 +89,20 @@ public class PlayerHandler implements Runnable {
                 break;
             case "UP":
                 player.setX(player.getX() - 1);
+                player.setDirection(Direction.UP);
                 break;
             case "DOWN":
                 player.setX(player.getX() + 1);
+                player.setDirection(Direction.DOWN);
                 break;
+        }
+
+        if (isShooting) {
+            player.shoot();
         }
     }
 
     public synchronized void actualizarMapa() throws IOException {
-
         //Player player = playersList.get(nro_jugador);
         // Clonar el mapa original
         char[][] map = stage.getMapa().clone();
@@ -112,6 +122,13 @@ public class PlayerHandler implements Runnable {
             for (int i = y; i < y + 7; i++) {
                 map[x + 1][i] = avatar.charAt(i - y + 8);
             }
+
+            for (Bullet bullet : player.getBullets()) {
+                int bulletX = bullet.getX();
+                int bulletY = bullet.getY();
+                map[bulletX+1][bulletY+3] = bullet.getAvatar().charAt(0);
+            }
+
         }
 
         StringBuilder mapaStr = new StringBuilder();
@@ -138,7 +155,7 @@ public class PlayerHandler implements Runnable {
     }
 
     private void logMessageReceived(String message) {
-        System.out.println("Mensaje recibido del cliente " + nro_jugador + ": " + message);
+        System.out.println("Mensaje recibido del cliente " + nro_jugador + ": " + message );
     }
 
     public boolean isValidMovement(char[][] map, int x, int y){

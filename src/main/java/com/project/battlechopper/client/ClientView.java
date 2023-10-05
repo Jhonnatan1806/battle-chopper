@@ -1,5 +1,7 @@
 package com.project.battlechopper.client;
 
+import com.project.battlechopper.model.Direction;
+
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -83,22 +85,22 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
 
         switch (keyCode) {
             case KeyEvent.VK_W:
-                clientController.sendDirection("UP");
-                break;
+                clientController.setData(Direction.UP, false);
+                return;
             case KeyEvent.VK_S:
-                clientController.sendDirection("DOWN");
-                break;
+                clientController.setData(Direction.DOWN,false);
+                return;
             case KeyEvent.VK_A:
-                clientController.sendDirection("LEFT");
-                break;
+                clientController.setData(Direction.LEFT,false);
+                return;
             case KeyEvent.VK_D:
-                clientController.sendDirection("RIGHT");
-                break;
+                clientController.setData(Direction.RIGHT,false);
+                return;
             case KeyEvent.VK_SPACE:
-                clientController.player.shoot();
+                Direction direction = clientController.player.getDirection();
+                clientController.setData(direction, true);
                 break;
         }
-
 
     }
 

@@ -40,7 +40,7 @@ public class GameClient implements Runnable {
         }
     }
 
-    public void sendDirection(String message) {
+    public void sendData(String message) {
         if (serverOut != null) {
             System.out.println("Sending direction: " + message);
             serverOut.println(message);
@@ -65,7 +65,6 @@ public class GameClient implements Runnable {
                         }
                         serverMessage.append(linea).append("\n");
                     }
-
                     clientController.render(serverMessage.toString());
                 } else {
                     Thread.sleep(100);
