@@ -59,9 +59,19 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btn_connect) {
-            clientController.connect("localhost", 8188);
-            btn_connect.setEnabled(false);
-            btn_disconnect.setEnabled(true);
+            String input = JOptionPane.showInputDialog("Ingrese la dirección IP y el puerto", "127.0.0.1:8188");
+            if (input != null) {
+                String[] parts = input.split(":");
+                if (parts.length == 2) {
+                    String ip = parts[0];
+                    int port = Integer.parseInt(parts[1]);
+                    clientController.connect(ip, port);
+                    btn_connect.setEnabled(false);
+                    btn_disconnect.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Formato incorrecto. Debe ser IP:Puerto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }else if(e.getSource() == btn_disconnect){
             clientController.disconnect();
             btn_connect.setEnabled(true);
