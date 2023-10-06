@@ -11,18 +11,6 @@ public class Stage {
     public Stage(String rutaMapa){
         leerMapa(rutaMapa);
     }
-    
-    public void ImprimirMapa(){
-        //Siempre y cuando el mapa se halla inicializado
-        for(int i=0;i<nfilas;i++){
-            for(int j=0;j<ncolumnas;j++){
-                System.out.print(mapa[i][j]);
-            }
-            System.out.println();
-        }
-    }
-    
-    
     public char[][] getMapa(){
         return mapa;
     }
@@ -71,5 +59,16 @@ public class Stage {
             throw new RuntimeException(e);
         }
     }
+
+    public void ImprimirMapa(){
+        //Siempre y cuando el mapa se halla inicializado
+        for(int i=0;i<nfilas;i++){
+            for(int j=0;j<ncolumnas;j++){
+                System.out.print(mapa[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
 
 }

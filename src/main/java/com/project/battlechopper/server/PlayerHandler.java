@@ -95,7 +95,10 @@ public class PlayerHandler implements Runnable {
 
         // shoot
         if (isShooting) {
-            player.shoot();
+            if (stage == null){
+                return;
+            }
+            player.shoot(stage.getMapa());
         }
     }
 

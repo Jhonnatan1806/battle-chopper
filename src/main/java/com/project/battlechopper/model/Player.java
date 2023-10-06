@@ -9,8 +9,8 @@ public class Player implements Serializable {
   private int x;
   private int y;
   private Direction direction;
-  private String name;
-  private List<Bullet> bullets;
+  private final String name;
+  private final List<Bullet> bullets;
   private boolean isShooting;
   private int nro_jugador;
 
@@ -18,7 +18,7 @@ public class Player implements Serializable {
     this.name = name;
     this.x = 45;
     this.y = 10;
-    this.direction = Direction.NONE;
+    this.direction = Direction.RIGHT;
     this.bullets = new ArrayList<>();
     this.isShooting = false;
   }
@@ -79,7 +79,7 @@ public class Player implements Serializable {
     this.isShooting = isShooting;
   }
 
-  public void shoot(){
+  public void shoot(char[][] map){
     if(this.bullets.size() >= 5){
       return;
     }
@@ -87,12 +87,12 @@ public class Player implements Serializable {
       Bullet bullet = new Bullet(this.x , this.y+1, this.direction);
       this.bullets.add(bullet);
       bullet.move();
-      while (bullet.isOnScreen()) {
+      while (bullet.isOnScreen(map)) {
         bullet.move();
         try {
           Thread.sleep(25);
         } catch (InterruptedException e) {
-          e.printStackTrace();
+          System.out.println(e.getMessage());
         }
       }
       this.bullets.remove(bullet);

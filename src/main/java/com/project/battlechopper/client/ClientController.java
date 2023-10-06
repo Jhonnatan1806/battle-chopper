@@ -10,10 +10,10 @@ import java.util.ArrayList;
 
 public class ClientController {
 
-    ClientView clientView;
-    GameClient gameClient;
-    Player player;
-    char[][] map;
+    ClientView clientView; // vista
+    GameClient gameClient; // socket
+    Player player; // jugador
+    char[][] map; //mapa
 
     public ClientController(ClientView clientView) {
         this.clientView = clientView;
@@ -23,15 +23,15 @@ public class ClientController {
     }
 
     private void defaultSettings() {
-        char initMap[][] = new Stage("resources/inicio.txt").getMapa();
+        char[][] initMap = new Stage("resources/inicio.txt").getMapa();
         StringBuilder mapaStr = new StringBuilder();
         for (char[] item : initMap) {
-            for (int j = 0; j < item.length; j++) {
-                mapaStr.append(item[j]);
+            for (char c : item) {
+                mapaStr.append(c);
             }
             mapaStr.append("\n");
         }
-        clientView.getCanvas().setText(mapaStr.toString());
+        render(mapaStr.toString());
     }
 
     public void render(String map) {

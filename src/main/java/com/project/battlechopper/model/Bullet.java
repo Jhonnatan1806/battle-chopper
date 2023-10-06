@@ -47,8 +47,7 @@ public class Bullet {
         }
     }
 
-    public boolean isOnScreen() {
-        char[][] map = new Stage("resources/mapa.txt").getMapa();
+    public boolean isOnScreen(char[][] map) {
         if (x > 0 && x < 370 && y >= 0 && y < 22) {
             if(map[y][x] == '[' || map[y][x] == ']' || map[y][x] == '*'){
                 return false;
