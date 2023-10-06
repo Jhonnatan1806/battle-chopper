@@ -4,6 +4,8 @@ import com.project.battlechopper.model.Direction;
 import com.project.battlechopper.model.Player;
 import com.project.battlechopper.model.Stage;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class ClientController {
@@ -55,6 +57,26 @@ public class ClientController {
         return message;
     }
 
+    public void movePlayer(int x,int y,Direction direction,boolean isShooting) {
+        if (isShooting) {
+            player.setIsShooting(true);
+            return;
+        }
+        if (isPossibleToMove(direction)) {
+            switch (direction) {
+                case UP, DOWN:
+                    player.setY(player.getY() + y);
+                    player.setIsShooting(false);
+                    break;
+                case LEFT, RIGHT:
+                    player.setX(player.getX() + x);
+                    player.setIsShooting(false);
+                    player.setDirection(direction);
+                    break;
+            }
+        }
+    }
+
     public boolean isPossibleToMove(Direction direction) {
         int x = 0;
         int y = 0;
@@ -89,6 +111,41 @@ public class ClientController {
             return true;
         }
         return false;
+    }
+
+    public void moveCanvasLeft(JTextArea canvas) {
+        JViewport viewport = (JViewport) canvas.getParent();
+        int viewPosition = viewport.getViewPosition().x;
+
+        int scrollAmount = 6;
+
+        if(player.getX() <= 322){
+            int newViewPosition = viewPosition - scrollAmount;
+
+            if (newViewPosition < 0) {
+                newViewPosition = 0;
+            }
+
+            viewport.setViewPosition(new Point(newViewPosition, 0));
+        }
+    }
+
+    public void moveCanvasRight(JTextArea canvas) {
+        JViewport viewport = (JViewport) canvas.getParent();
+        int viewPosition = viewport.getViewPosition().x;
+
+        int scrollAmount = 6;
+
+        if(player.getX() >= 48){
+            int newViewPosition = viewPosition + scrollAmount;
+
+            int maxX = canvas.getWidth() - viewport.getWidth();
+            if (newViewPosition > maxX) {
+                newViewPosition = maxX;
+            }
+
+            viewport.setViewPosition(new Point(newViewPosition, 0));
+        }
     }
 
 }

@@ -101,42 +101,19 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
 
         switch (keyCode) {
             case KeyEvent.VK_W:
-                if(clientController.isPossibleToMove(Direction.UP)){
-                    Player player = clientController.player;
-                    player.setY(player.getY()-1);
-                    player.setIsShooting(false);
-                }
-                return;
+                clientController.movePlayer(0,-1,Direction.UP,false);
+                break;
             case KeyEvent.VK_S:
-                if(clientController.isPossibleToMove(Direction.DOWN)){
-                    Player player = clientController.player;
-                    player.setY(player.getY()+1);
-                    player.setIsShooting(false);
-                }
-                return;
+                clientController.movePlayer(0,1,Direction.DOWN,false);
+                break;
             case KeyEvent.VK_A:
-                if(clientController.isPossibleToMove(Direction.LEFT)){
-                    Player player = clientController.player;
-                    player.setDirection(Direction.LEFT);
-                    player.setX(player.getX()-1);
-                    player.setIsShooting(false);
-                    moveCanvasLeft();
-                }
-                return;
+                clientController.movePlayer(-1,0,Direction.LEFT,false);
+                break;
             case KeyEvent.VK_D:
-                if(clientController.isPossibleToMove(Direction.RIGHT)){
-                    Player player = clientController.player;
-                    player.setDirection(Direction.RIGHT);
-                    player.setX(player.getX()+1);
-                    player.setIsShooting(false);
-                    moveCanvasRight();
-                }
-                return;
+                clientController.movePlayer(1,0,Direction.RIGHT,false);
+                break;
             case KeyEvent.VK_SPACE:
-                Player player = clientController.player;
-                if(player.getDirection() != Direction.NONE){
-                    player.setIsShooting(true);
-                }
+                clientController.movePlayer(0,0,Direction.NONE,true);
                 break;
         }
 
@@ -147,40 +124,4 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
         // TODO Auto-generated method stub
     }
 
-    private void moveCanvasLeft() {
-        JTextArea canvas = getCanvas();
-        JViewport viewport = (JViewport) canvas.getParent();
-        int viewPosition = viewport.getViewPosition().x;
-
-        int scrollAmount = 6;
-
-        if(clientController.player.getX() <= 322){
-            int newViewPosition = viewPosition - scrollAmount;
-
-            if (newViewPosition < 0) {
-                newViewPosition = 0;
-            }
-
-            viewport.setViewPosition(new Point(newViewPosition, 0));
-        }
-    }
-
-    private void moveCanvasRight() {
-        JTextArea canvas = getCanvas();
-        JViewport viewport = (JViewport) canvas.getParent();
-        int viewPosition = viewport.getViewPosition().x;
-
-        int scrollAmount = 6;
-
-        if(clientController.player.getX() >= 48){
-            int newViewPosition = viewPosition + scrollAmount;
-
-            int maxX = canvas.getWidth() - viewport.getWidth();
-            if (newViewPosition > maxX) {
-                newViewPosition = maxX;
-            }
-
-            viewport.setViewPosition(new Point(newViewPosition, 0));
-        }
-    }
 }
