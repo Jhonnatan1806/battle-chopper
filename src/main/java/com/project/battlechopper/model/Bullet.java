@@ -39,16 +39,23 @@ public class Bullet {
                 this.y += this.speed;
                 break;
             case LEFT:
-                this.x -= 3*this.speed;
+                this.x -= this.speed;
                 break;
             case RIGHT:
-                this.x += 3*this.speed;
+                this.x += this.speed;
                 break;
         }
     }
 
     public boolean isOnScreen() {
-        return this.x > 0 && this.x < 370  && this.y > 0 && this.y < 22;
+        char[][] map = new Stage("resources/mapa.txt").getMapa();
+        if (x >= 0 && x < 370 && y >= 0 && y < 22) {
+            if(map[y][x] == '[' || map[y][x] == ']' || map[y][x] == '*'){
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
 }

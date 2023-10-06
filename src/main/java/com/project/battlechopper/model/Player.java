@@ -80,17 +80,17 @@ public class Player implements Serializable {
   }
 
   public void shoot(){
-    if(this.bullets.size() >= 3){
+    if(this.bullets.size() >= 5){
       return;
     }
     new Thread(() -> {
-      Bullet bullet = new Bullet(this.x , this.y, this.direction);
+      Bullet bullet = new Bullet(this.x , this.y+1, this.direction);
       this.bullets.add(bullet);
       bullet.move();
       while (bullet.isOnScreen()) {
         bullet.move();
         try {
-          Thread.sleep(100);
+          Thread.sleep(25);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }

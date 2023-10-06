@@ -103,7 +103,6 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
             case KeyEvent.VK_W:
                 if(clientController.isPossibleToMove(Direction.UP)){
                     Player player = clientController.player;
-                    player.setDirection(Direction.UP);
                     player.setY(player.getY()-1);
                     player.setIsShooting(false);
                 }
@@ -111,7 +110,6 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
             case KeyEvent.VK_S:
                 if(clientController.isPossibleToMove(Direction.DOWN)){
                     Player player = clientController.player;
-                    player.setDirection(Direction.DOWN);
                     player.setY(player.getY()+1);
                     player.setIsShooting(false);
                 }

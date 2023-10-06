@@ -21,8 +21,9 @@ public class ClientController {
     }
 
     private void defaultSettings() {
+        char initMap[][] = new Stage("resources/inicio.txt").getMapa();
         StringBuilder mapaStr = new StringBuilder();
-        for (char[] item : map) {
+        for (char[] item : initMap) {
             for (int j = 0; j < item.length; j++) {
                 mapaStr.append(item[j]);
             }
@@ -61,27 +62,30 @@ public class ClientController {
         switch (direction) {
             case UP:
                 y = player.getY() - 1;
+                x = player.getX();
                 break;
             case DOWN:
                 y = player.getY() + 1;
+                x = player.getX();
                 break;
             case LEFT:
                 x = player.getX() - 1;
+                y = player.getY();
                 break;
             case RIGHT:
                 x = player.getX() + 1;
+                y = player.getY();
                 break;
             default:
                 return false;
         }
 
         if (x >= 0 && x < 370 && y >= 0 && y < 22) {
-            /*if( map[y][x] != ' ' || map[y][x+1] != ' ' || map[y][x+2] != ' ' || map[y][x+6] != ' '){
-                return false;
+            for(int i = 0; i < 7; i++){
+                if(map[y][x+i] != ' ' || map[y+1][x+i] != ' '){
+                    return false;
+                }
             }
-            if(map[y+1][x] != ' '|| map[y+1][x+1] != ' '|| map[y+1][x+2] != ' ' || map[y+1][x+6] != ' '){
-                return false;
-            }*/
             return true;
         }
         return false;
