@@ -1,8 +1,9 @@
 package com.project.battlechopper.client;
 
 import com.project.battlechopper.model.Direction;
+import com.project.battlechopper.model.Player;
 
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +33,12 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
         ta_canvas.setBounds(10, 40, 580, 325);
         ta_canvas.setFocusable(true);
         ta_canvas.addKeyListener(this);
-        add(ta_canvas);
+
+        JScrollPane scrollPane = new JScrollPane(ta_canvas);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(10, 40, 580, 370);
+        add(scrollPane);
 
         btn_connect = new JButton("Connect");
         btn_connect.setBounds(10, 10, 100, 20);
@@ -48,7 +54,7 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
         btn_disconnect.setEnabled(false);
         add(btn_disconnect);
 
-        setSize(620, 415);
+        setSize(620, 460);
         setLocationRelativeTo(null);
     }
 
@@ -69,7 +75,7 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
                     btn_connect.setEnabled(false);
                     btn_disconnect.setEnabled(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Formato incorrecto. Debe ser IP:Puerto", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Formato incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }else if(e.getSource() == btn_disconnect){
@@ -95,20 +101,44 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
 
         switch (keyCode) {
             case KeyEvent.VK_W:
-                clientController.setData(Direction.UP, false);
+                if(clientController.isPossibleToMove(Direction.UP)){
+                    Player player = clientController.player;
+                    player.setDirection(Direction.UP);
+                    player.setY(player.getY()-1);
+                    player.setIsShooting(false);
+                }
                 return;
             case KeyEvent.VK_S:
-                clientController.setData(Direction.DOWN,false);
+                if(clientController.isPossibleToMove(Direction.DOWN)){
+                    Player player = clientController.player;
+                    player.setDirection(Direction.DOWN);
+                    player.setY(player.getY()+1);
+                    player.setIsShooting(false);
+                }
                 return;
             case KeyEvent.VK_A:
-                clientController.setData(Direction.LEFT,false);
+                if(clientController.isPossibleToMove(Direction.LEFT)){
+                    Player player = clientController.player;
+                    player.setDirection(Direction.LEFT);
+                    player.setX(player.getX()-1);
+                    player.setIsShooting(false);
+                    moveCanvasLeft();
+                }
                 return;
             case KeyEvent.VK_D:
-                clientController.setData(Direction.RIGHT,false);
+                if(clientController.isPossibleToMove(Direction.RIGHT)){
+                    Player player = clientController.player;
+                    player.setDirection(Direction.RIGHT);
+                    player.setX(player.getX()+1);
+                    player.setIsShooting(false);
+                    moveCanvasRight();
+                }
                 return;
             case KeyEvent.VK_SPACE:
-                Direction direction = clientController.player.getDirection();
-                clientController.setData(direction, true);
+                Player player = clientController.player;
+                if(player.getDirection() != Direction.NONE){
+                    player.setIsShooting(true);
+                }
                 break;
         }
 
@@ -117,5 +147,42 @@ public class ClientView extends JFrame implements KeyListener, ActionListener {
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
+    }
+
+    private void moveCanvasLeft() {
+        JTextArea canvas = getCanvas();
+        JViewport viewport = (JViewport) canvas.getParent();
+        int viewPosition = viewport.getViewPosition().x;
+
+        int scrollAmount = 6;
+
+        if(clientController.player.getX() <= 322){
+            int newViewPosition = viewPosition - scrollAmount;
+
+            if (newViewPosition < 0) {
+                newViewPosition = 0;
+            }
+
+            viewport.setViewPosition(new Point(newViewPosition, 0));
+        }
+    }
+
+    private void moveCanvasRight() {
+        JTextArea canvas = getCanvas();
+        JViewport viewport = (JViewport) canvas.getParent();
+        int viewPosition = viewport.getViewPosition().x;
+
+        int scrollAmount = 6;
+
+        if(clientController.player.getX() >= 48){
+            int newViewPosition = viewPosition + scrollAmount;
+
+            int maxX = canvas.getWidth() - viewport.getWidth();
+            if (newViewPosition > maxX) {
+                newViewPosition = maxX;
+            }
+
+            viewport.setViewPosition(new Point(newViewPosition, 0));
+        }
     }
 }

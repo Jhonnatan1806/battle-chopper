@@ -10,21 +10,17 @@ public class ClientController {
 
     ClientView clientView;
     GameClient gameClient;
-    ArrayList<String> mapList;
     Player player;
-    boolean isShooting;
+    char[][] map;
 
     public ClientController(ClientView clientView) {
         this.clientView = clientView;
-        this.player = new Player(8, 20, Direction.NONE, "Player");
-        this.mapList = new ArrayList<>();
-        this.isShooting = false;
+        this.player = new Player( "Client");
+        this.map = new Stage("resources/mapa.txt").getMapa();
         this.defaultSettings();
     }
 
     private void defaultSettings(){
-        Stage stage = new Stage("resources/mapa.txt");
-        char[][] map = stage.getMapa();
         StringBuilder mapaStr = new StringBuilder();
         for (char[] item : map) {
             for (int j = 0; j < item.length; j++) {
@@ -42,21 +38,6 @@ public class ClientController {
     public void connect(String serverAddress, int serverPort ){
         gameClient = new GameClient(serverAddress, serverPort , this);
         new Thread(gameClient).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true){
-                    gameClient.sendData(player.getDirection()+","+ isShooting);
-                    player.setDirection(Direction.NONE);
-                    isShooting = false;
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
     }
 
     public void disconnect(){
@@ -64,8 +45,43 @@ public class ClientController {
         defaultSettings();
     }
 
-    public void setData(Direction direction, boolean state) {
-        player.setDirection(direction);
-        isShooting = state;
+    public String getMessage() {
+        String message = player.getX() + "," + player.getY() + "," + player.getDirection() + "," + player.getIsShooting();
+        player.setIsShooting(false);
+        return message;
     }
+
+    public boolean isPossibleToMove(Direction direction) {
+        int x = 0;
+        int y = 0;
+
+        switch (direction){
+            case UP:
+                y = player.getY() - 1;
+                break;
+            case DOWN:
+                y = player.getY() + 1;
+                break;
+            case LEFT:
+                x = player.getX() - 1;
+                break;
+            case RIGHT:
+                x = player.getX() + 1;
+                break;
+            default:
+                return false;
+        }
+
+        if( x>=0 && x<370 && y>=0 && y<22){
+            /*if( map[y][x] != ' ' || map[y][x+1] != ' ' || map[y][x+2] != ' ' || map[y][x+6] != ' '){
+                return false;
+            }
+            if(map[y+1][x] != ' '|| map[y+1][x+1] != ' '|| map[y+1][x+2] != ' ' || map[y+1][x+6] != ' '){
+                return false;
+            }*/
+            return true;
+        }
+        return false;
+    }
+
 }

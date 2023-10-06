@@ -11,13 +11,15 @@ public class Player implements Serializable {
   private Direction direction;
   private String name;
   private List<Bullet> bullets;
+  private boolean isShooting;
 
-  public Player(int x, int y, Direction direction, String name) {
-    this.x = x;
-    this.y = y;
-    this.direction = direction;
+  public Player(String name) {
     this.name = name;
+    this.x = 45;
+    this.y = 10;
+    this.direction = Direction.NONE;
     this.bullets = new ArrayList<>();
+    this.isShooting = false;
   }
 
   public String getAvatar() {
@@ -32,36 +34,40 @@ public class Player implements Serializable {
     return x;
   }
 
-  public void setX(int x) {
-    this.x = x;
-  }
-
-  public int getY() {
-    return y;
-  }
-
-  public void setY(int y) {
-    this.y = y;
-  }
-
   public Direction getDirection() {
     return direction;
-  }
-
-  public void setDirection(Direction direction) {
-    this.direction = direction;
   }
 
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public boolean getIsShooting() {
+    return isShooting;
   }
 
   public List<Bullet> getBullets() {
     return bullets;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public void setX(int x) {
+    this.x = x;
+  }
+
+  public void setY(int y) {
+    this.y = y;
+  }
+
+  public void setDirection(Direction direction) {
+    this.direction = direction;
+  }
+
+  public void setIsShooting(boolean isShooting) {
+    this.isShooting = isShooting;
   }
 
   public void shoot(){
@@ -69,7 +75,7 @@ public class Player implements Serializable {
       return;
     }
     new Thread(() -> {
-      Bullet bullet = new Bullet(this.x, this.y, this.direction);
+      Bullet bullet = new Bullet(this.x , this.y, this.direction);
       this.bullets.add(bullet);
       bullet.move();
       while (bullet.isOnScreen()) {

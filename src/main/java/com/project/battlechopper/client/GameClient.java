@@ -40,12 +40,24 @@ public class GameClient implements Runnable {
         }
     }
 
-    public void sendData(String message) {
+    public void sendDataPlayer(String message) {
         if (serverOut != null) {
-            System.out.println("Sending direction: " + message);
+            System.out.println("Sending data: " + message);
             serverOut.println(message);
-        } else {
-            System.out.println("No hay mensaje.");
+        }
+    }
+
+    public void receiveDataMap(){
+        StringBuilder serverMessage = new StringBuilder();
+        if (serverIn.hasNextLine()) {
+            while (true) {
+                String linea = serverIn.nextLine();
+                if (linea.isEmpty()) {
+                    break;
+                }
+                serverMessage.append(linea).append("\n");
+            }
+            clientController.render(serverMessage.toString());
         }
     }
 
@@ -54,25 +66,22 @@ public class GameClient implements Runnable {
         try {
             connect();
 
-            while (!disconnectRequested) {
-                StringBuilder serverMessage = new StringBuilder();
-
-                if (serverIn.hasNextLine()) {
-                    while (true) {
-                        String linea = serverIn.nextLine();
-                        if (linea.isEmpty()) {
-                            break;
-                        }
-                        serverMessage.append(linea).append("\n");
+            new Thread(() -> {
+                while (!disconnectRequested) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    clientController.render(serverMessage.toString());
-                } else {
-                    Thread.sleep(100);
+                    sendDataPlayer(clientController.getMessage());
                 }
+            }).start();
+
+            while (!disconnectRequested) {
+                receiveDataMap();
             }
+
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             disconnect();

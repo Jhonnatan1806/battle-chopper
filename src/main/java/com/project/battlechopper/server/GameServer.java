@@ -29,7 +29,7 @@ public class GameServer implements Runnable {
                 connList.add(conex_cliente);
 
                 System.out.println("Engendrado jugador: " + nro_jugador);
-                Player jugador = new Player(8, 20, Direction.RIGHT, String.valueOf((char)(65 + nro_jugador)));
+                Player jugador = new Player(String.valueOf((char)(65 + nro_jugador)));
 
                 playersList.add(jugador);
 
