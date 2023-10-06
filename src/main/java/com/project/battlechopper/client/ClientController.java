@@ -15,12 +15,12 @@ public class ClientController {
 
     public ClientController(ClientView clientView) {
         this.clientView = clientView;
-        this.player = new Player( "Client");
+        this.player = new Player("Client");
         this.map = new Stage("resources/mapa.txt").getMapa();
         this.defaultSettings();
     }
 
-    private void defaultSettings(){
+    private void defaultSettings() {
         StringBuilder mapaStr = new StringBuilder();
         for (char[] item : map) {
             for (int j = 0; j < item.length; j++) {
@@ -31,16 +31,19 @@ public class ClientController {
         clientView.getCanvas().setText(mapaStr.toString());
     }
 
-    public void render(String map){
+    public void render(String map) {
         clientView.getCanvas().setText(map);
     }
 
-    public void connect(String serverAddress, int serverPort ){
-        gameClient = new GameClient(serverAddress, serverPort , this);
+    public void connect(String serverAddress, int serverPort) {
+        gameClient = new GameClient(serverAddress, serverPort, this);
         new Thread(gameClient).start();
     }
 
-    public void disconnect(){
+    public void disconnect() {
+        player.setX(45);
+        player.setY(10);
+        player.setDirection(Direction.RIGHT);
         gameClient.disconnect();
         defaultSettings();
     }
@@ -55,7 +58,7 @@ public class ClientController {
         int x = 0;
         int y = 0;
 
-        switch (direction){
+        switch (direction) {
             case UP:
                 y = player.getY() - 1;
                 break;
@@ -72,7 +75,7 @@ public class ClientController {
                 return false;
         }
 
-        if( x>=0 && x<370 && y>=0 && y<22){
+        if (x >= 0 && x < 370 && y >= 0 && y < 22) {
             /*if( map[y][x] != ' ' || map[y][x+1] != ' ' || map[y][x+2] != ' ' || map[y][x+6] != ' '){
                 return false;
             }

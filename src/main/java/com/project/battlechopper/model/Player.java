@@ -12,6 +12,7 @@ public class Player implements Serializable {
   private String name;
   private List<Bullet> bullets;
   private boolean isShooting;
+  private int nro_jugador;
 
   public Player(String name) {
     this.name = name;
@@ -61,6 +62,14 @@ public class Player implements Serializable {
   public void setY(int y) {
     this.y = y;
   }
+  
+  public int getNro_jugador() {
+        return nro_jugador;
+    }
+
+    public void setNro_jugador(int nro_jugador) {
+        this.nro_jugador = nro_jugador;
+    }
 
   public void setDirection(Direction direction) {
     this.direction = direction;

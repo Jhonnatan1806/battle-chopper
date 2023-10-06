@@ -26,6 +26,7 @@ public class GameClient implements Runnable {
     }
 
     public synchronized void disconnect() {
+        serverOut.println("close");
         disconnectRequested = true;
         try {
             if (socketClient != null && !socketClient.isClosed()) {
@@ -49,9 +50,13 @@ public class GameClient implements Runnable {
 
     public void receiveDataMap(){
         StringBuilder serverMessage = new StringBuilder();
-        if (serverIn.hasNextLine()) {
+        if (serverIn != null && serverIn.hasNextLine()) {
             while (true) {
-                String linea = serverIn.nextLine();
+                String linea = "";
+                if(serverIn != null) {
+                    linea = serverIn.nextLine();
+                }
+                
                 if (linea.isEmpty()) {
                     break;
                 }
@@ -83,9 +88,10 @@ public class GameClient implements Runnable {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            disconnect();
-        }
+        } 
+//        finally {
+//            disconnect();
+//        }
     }
 
 }

@@ -20,7 +20,7 @@ public class PlayerHandler implements Runnable {
     private List<Player> playersList;
     private Player player;
     private Socket conexCliente;
-    private boolean connected;
+    //private boolean connected;
 
 
     public PlayerHandler(List<Socket> connList, int nro_jugador, Stage stage, List<Player> jugadores) {
@@ -28,9 +28,15 @@ public class PlayerHandler implements Runnable {
         this.nro_jugador = nro_jugador;
         this.stage = stage;
         this.playersList = jugadores;
-        this.player = playersList.get(nro_jugador);
+        //this.player = playersList.get(nro_jugador);
+        for(Player player: playersList) {
+            if(player.getNro_jugador() == nro_jugador) {
+                this.player = player;
+                break;
+            }
+        }
         this.conexCliente = connList.get(nro_jugador);
-        this.connected = true;
+        //this.connected = true;
     }
 
     @Override
@@ -44,7 +50,12 @@ public class PlayerHandler implements Runnable {
             sendDataMap();
 
             while (in.hasNextLine()) {
-                String direccion = in.nextLine();
+                String mensaje = in.nextLine();
+                if (mensaje.equals("close")) {
+                    playersList.remove(player);
+                    break;
+                }
+                String direccion = mensaje;
                 logMessageReceived(direccion);
                 receiveDataPlayer(direccion);
                 sendDataMap();
@@ -56,7 +67,7 @@ public class PlayerHandler implements Runnable {
         } finally {
             try {
                 conexCliente.close();
-                connected = false;
+                //connected = false;
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

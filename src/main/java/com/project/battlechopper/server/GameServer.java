@@ -31,6 +31,7 @@ public class GameServer implements Runnable {
                 System.out.println("Engendrado jugador: " + nro_jugador);
                 Player jugador = new Player(String.valueOf((char)(65 + nro_jugador)));
 
+                jugador.setNro_jugador(nro_jugador);
                 playersList.add(jugador);
 
                 Thread t = new Thread(new PlayerHandler(connList, nro_jugador, stage, playersList));
