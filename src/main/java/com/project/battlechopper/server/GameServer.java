@@ -27,13 +27,13 @@ public class GameServer implements Runnable {
             while (true) {
                 Socket conex_cliente = serverSocket.accept();
                 connList.add(conex_cliente);
-
+                
                 System.out.println("Engendrado jugador: " + nro_jugador);
                 Player jugador = new Player(String.valueOf((char)(65 + nro_jugador)));
-
+                
                 jugador.setNro_jugador(nro_jugador);
                 playersList.add(jugador);
-
+                
                 Thread t = new Thread(new PlayerHandler(connList, nro_jugador, stage, playersList));
                 t.start();
                 nro_jugador++;
@@ -42,5 +42,4 @@ public class GameServer implements Runnable {
             e.printStackTrace();
         }
     }
-
 }

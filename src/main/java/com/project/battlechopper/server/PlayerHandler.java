@@ -22,21 +22,18 @@ public class PlayerHandler implements Runnable {
     private Socket conexCliente;
     //private boolean connected;
 
-
     public PlayerHandler(List<Socket> connList, int nro_jugador, Stage stage, List<Player> jugadores) {
         this.connList = connList;
         this.nro_jugador = nro_jugador;
         this.stage = stage;
         this.playersList = jugadores;
-        //this.player = playersList.get(nro_jugador);
-        for(Player player: playersList) {
-            if(player.getNro_jugador() == nro_jugador) {
+        for (Player player : playersList) {
+            if (player.getNro_jugador() == nro_jugador) {
                 this.player = player;
                 break;
             }
         }
         this.conexCliente = connList.get(nro_jugador);
-        //this.connected = true;
     }
 
     @Override
@@ -55,9 +52,8 @@ public class PlayerHandler implements Runnable {
                     playersList.remove(player);
                     break;
                 }
-                String direccion = mensaje;
-                logMessageReceived(direccion);
-                receiveDataPlayer(direccion);
+                logMessageReceived(mensaje);
+                receiveDataPlayer(mensaje);
                 sendDataMap();
 
             }
@@ -78,7 +74,6 @@ public class PlayerHandler implements Runnable {
 
         // receive data of player -> "x,y,direction,shooting"
         String[] parts = data.split(",");
-
 
         // check if data is valid
         if (parts.length != 4) {
@@ -116,11 +111,11 @@ public class PlayerHandler implements Runnable {
 
             String avatar = player.getAvatar();
 
-            for (int i = 0; i < 7 ; i++) {
-                map[y][x+i] = avatar.charAt(i);
+            for (int i = 0; i < 7; i++) {
+                map[y][x + i] = avatar.charAt(i);
             }
             for (int i = 0; i < 7; i++) {
-                map[y+1][x+i] = avatar.charAt(i + 8);
+                map[y + 1][x + i] = avatar.charAt(i + 8);
             }
 
             for (Bullet bullet : player.getBullets()) {
@@ -154,7 +149,7 @@ public class PlayerHandler implements Runnable {
     }
 
     private void logMessageReceived(String message) {
-        System.out.println("Mensaje recibido del cliente " + nro_jugador + ": " + message );
+        System.out.println("Mensaje recibido del cliente " + nro_jugador + ": " + message);
     }
 
 }
