@@ -62,18 +62,26 @@ public class ClientController {
             player.setIsShooting(true);
             return;
         }
-        if (isPossibleToMove(direction)) {
+        if(isPossibleToMove(direction)){
             switch (direction) {
                 case UP, DOWN:
                     player.setY(player.getY() + y);
                     player.setIsShooting(false);
                     break;
-                case LEFT, RIGHT:
+                case LEFT:
                     player.setX(player.getX() + x);
                     player.setIsShooting(false);
                     player.setDirection(direction);
+                    moveCanvasLeft(clientView.getCanvas());
+                    break;
+                case RIGHT:
+                    player.setX(player.getX() + x);
+                    player.setIsShooting(false);
+                    player.setDirection(direction);
+                    moveCanvasRight(clientView.getCanvas());
                     break;
             }
+
         }
     }
 
